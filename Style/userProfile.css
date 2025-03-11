@@ -1,0 +1,349 @@
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    min-height: 100dvh;
+    background-color: var(--background-color);
+}
+
+.main-content {
+    padding-top: 3.5rem;
+    min-height: 100dvh;
+    padding-bottom: 5rem;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.main-content.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.profile-container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Profile Header */
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+}
+
+.edit-avatar-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.edit-icon {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+.profile-name {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-info {
+    color: var(--black-light-color);
+    font-size: 0.9rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+    display: block;
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    color: var(--black-light-color);
+    font-size: 0.9rem;
+}
+
+/* Settings Sections */
+.settings-section {
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+}
+
+.settings-list {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.setting-content {
+    flex: 1;
+}
+
+.setting-content span {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.setting-content p {
+    color: var(--black-light-color);
+    font-size: 0.85rem;
+}
+
+.arrow-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--black-light-color);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    background-color: var(--black-light-color);
+    position: relative;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.toggle-track {
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+body.dark .toggle-track {
+    transform: translateX(24px);
+}
+
+/* Logout Button */
+.logout-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background-color: var(--panel-color);
+    border: 1px solid var(--error-color);
+    border-radius: 12px;
+    color: var(--error-color);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.logout-icon {
+    font-size: 1.2rem;
+}
+
+/* Fade Animation */
+.fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name {
+        font-size: 1.3rem;
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+    }
+
+    .setting-item {
+        padding: 0.8rem;
+    }
+
+    .setting-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Ripple Effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    from {
+        transform: scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Page Transition Overlay */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background-color);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Interactive States */
+.setting-item {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.setting-item:active {
+    transform: scale(0.98);
+}
+
+.setting-item:hover {
+    background-color: var(--hover-color);
+}
+
+.edit-avatar-btn:hover {
+    transform: scale(1.1);
+}
+
+.edit-avatar-btn:active {
+    transform: scale(0.95);
+}

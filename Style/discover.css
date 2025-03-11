@@ -1,0 +1,190 @@
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    min-height: 100dvh;
+    background-color: var(--background-color);
+}
+
+
+/* Discover Page Styles */
+.discover-header {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.discover-header h1 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.discover-header p {
+    color: var(--black-light-color);
+    font-size: 1rem;
+}
+
+/* Sections Common Styles */
+.features-section,
+.resources-section,
+.help-section {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+section h2 {
+    color: var(--text-color);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+}
+
+.features-section {
+    margin-top: 2.5rem;
+    margin-bottom: 0;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+
+.feature-card {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Resources Grid */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+
+.resource-card {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Help Section */
+.help-section {
+    padding: 0 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.help-card {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Hover Effects */
+.feature-card:hover,
+.resource-card:hover,
+.help-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icons */
+.feature-icon,
+.resource-icon,
+.help-icon {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    min-width: 2rem;
+    text-align: center;
+}
+
+/* Card Info */
+.feature-info h3,
+.resource-info h3,
+.help-info h3 {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.feature-info p,
+.resource-info p,
+.help-info p {
+    color: var(--black-light-color);
+    font-size: 0.9rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .discover-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .features-grid,
+    .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .feature-card,
+    .resource-card,
+    .help-card {
+        padding: 0.75rem;
+    }
+
+    .feature-icon,
+    .resource-icon,
+    .help-icon {
+        font-size: 1.6rem;
+    }
+
+    section h2 {
+        font-size: 1.2rem;
+    }
+
+    .feature-info h3,
+    .resource-info h3,
+    .help-info h3 {
+        font-size: 1rem;
+    }
+
+    .feature-info p,
+    .resource-info p,
+    .help-info p {
+        font-size: 0.85rem;
+    }
+
+    .help-section {
+        padding: 0 1rem;
+    }
+}
