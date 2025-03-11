@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKBAL EDU</title>
+    <!-- Style -->
+     <link rel="stylesheet" href="/Style/home.css">
+     <link rel="stylesheet" href="/Style/Color/mode.css">
+     <link rel="stylesheet" href="/Style/navigation/nav.css">
+     <link rel="stylesheet" href="/Style/shared/transitions.css">
+</head>
+<body>
+
+    <div class="page-transition-overlay"></div>
+
+    <header class="header">
+        <nav class="navtop">
+            <a href="index.html" class="logo">Boys Department</a>
+        </nav>
+    </header>
+
+
+        <!-- Add main content container -->
+        <div class="main-content fade-in">
+
+            <div class="image-container">
+                <img src="/Data/images/Home/head.png" alt="Main Image" class="main-image">
+            </div>
+            
+            <!-- Features Section -->
+            <div class="features-section">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📅</div>
+                        <h3>Schedule</h3>
+                        <p>Access your timetable</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <h3>Resources</h3>
+                        <p>Access study materials</p>
+                    </div>
+                    <div class="feature-item" onclick="handlePageTransition(event, 'robot.html')" style="cursor: pointer;">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Robot</h3>
+                        <p>Get instant answers</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h3>Marks</h3>
+                        <p>View exam results</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="cards-container">
+                <div class="card staff-card">
+                    <img src="/Data/images/Staff/youssef.png" alt="Youssef Zidan" class="staff-image" id="FirstCard">
+                    <div class="staff-info">
+                        <h3>Youssef Zidan</h3>
+                        <p class="staff-title">Lead Developer</p>
+                        <p class="staff-description">Responsible for developing and maintaining the EKBAL EDU platform</p>
+                    </div>
+                </div>
+
+                <div class="card staff-card">
+                    <img src="/Data/images/Staff/hassan.png" alt="Hassan Magdy" class="staff-image" id="SecondCard">
+                    <div class="staff-info">
+                        <h3>Hassan Magdy</h3>
+                        <p class="staff-title">Head of Control</p>
+                        <p class="staff-description">Manages and oversees the academic control system</p>
+                    </div>
+                </div>
+
+                <div class="card staff-card">
+                    <img src="/Data/images/Staff/farghaly.png" alt="Dr. Ahmed Farghaly" class="staff-image" id="ThirdCard">
+                    <div class="staff-info">
+                        <h3>Dr. Ahmed Farghaly</h3>
+                        <p class="staff-title">Head of Department</p>
+                        <p class="staff-description">Leading the boys department and educational development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link active">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm9-8.586 6 6V20H6v-9.586l6-6z"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-link" onclick="handlePageTransition(event, 'discover.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="robot.html" class="nav-link" onclick="handlePageTransition(event, 'robot.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73c.61-.35 1-1.02 1-1.73 0-1.1-.9-2-2-2s-2 .9-2 2c0 .71.39 1.38 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1zM9 12c.83 0 1.5.67 1.5 1.5S9.83 15 9 15s-1.5-.67-1.5-1.5S8.17 12 9 12zm6 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
+            </svg>
+            <span>Robot</span>
+        </a>
+        <a href="userProfile.html" class="nav-link">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+    
+    <!-- More Menu -->
+    <div class="more-menu" id="moreMenu">
+        <div class="menu-header">
+            <h3>More Options</h3>
+            <button class="close-menu" id="closeMenu">×</button>
+        </div>
+        <div class="menu-items">
+            <a href="#" class="menu-item">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+                <span>Groups</span>
+            </a>
+            <a href="#" class="menu-item">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0-2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/>
+                </svg>
+                <span>Videos</span>
+            </a>
+            <a href="#" class="menu-item">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+                <span>Sheets</span>
+            </a>
+            <a href="#" class="menu-item">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M19 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 16H5V4h14v14z"/>
+                </svg>
+                <span>Challenges</span>
+            </a>
+            <a href="#" class="menu-item">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                </svg>
+                <span>How to Use</span>
+            </a>
+            <a href="#" class="menu-item" id="logoutBtn">
+                <svg viewBox="0 0 24 24" class="menu-icon">
+                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                </svg>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+    
+    <script src="/Logic/Home.js"></script>
+    <script src="/Logic/shared/transitions.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDOB2_SQZ1L6rcDD87-3wYZMeYfTwEkGx4",
+          authDomain: "ekbal-boys.firebaseapp.com",
+          projectId: "ekbal-boys",
+          storageBucket: "ekbal-boys.firebasestorage.app",
+          messagingSenderId: "938292269495",
+          appId: "1:938292269495:web:5974e80f48a94c2e4cd832"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+      </script>
+
+</body>
+</html>

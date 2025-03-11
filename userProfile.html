@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - EKBAL EDU</title>
+    <!-- Style -->
+    <link rel="stylesheet" href="/Style/userProfile.css">
+    <link rel="stylesheet" href="/Style/Color/mode.css">
+    <link rel="stylesheet" href="/Style/navigation/nav.css">
+</head>
+<body>
+    <div class="page-transition-overlay"></div>
+
+    <header class="header">
+        <nav class="navtop">
+            <a href="userProfile.html" class="logo">Profile</a>
+        </nav>
+    </header>
+
+    <div class="main-content fade-in">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="/Data/images/Profile/default-avatar.png" alt="Profile" id="profileAvatar">
+                    <button class="edit-avatar-btn">
+                        <svg viewBox="0 0 24 24" class="edit-icon">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                    </button>
+                </div>
+                <h2 class="profile-name">Youssef Zidan</h2>
+                <p class="profile-info">Class 2-C • Student ID: 468928304</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-value">85%</span>
+                    <span class="stat-label">Attendance</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">92%</span>
+                    <span class="stat-label">Average</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">15</span>
+                    <span class="stat-label">Assignments</span>
+                </div>
+            </div>
+
+            <!-- Settings Sections -->
+            <div class="settings-sections">
+                <!-- Account Settings -->
+                <section class="settings-section">
+                    <h3>Account Settings</h3>
+                    <div class="settings-list">
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">👤</div>
+                            <div class="setting-content">
+                                <span>Personal Information</span>
+                                <p>Update your profile details</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">🔒</div>
+                            <div class="setting-content">
+                                <span>Password & Security</span>
+                                <p>Manage your login settings</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+
+                        <div class="setting-item">
+                            <div class="setting-icon">🌙</div>
+                            <div class="setting-content">
+                                <span>Dark Mode</span>
+                                <p>Switch app theme</p>
+                            </div>
+                            <button id="theme-toggle" class="theme-toggle">
+                                <span class="toggle-track"></span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Preferences -->
+                <section class="settings-section">
+                    <h3>Preferences</h3>
+                    <div class="settings-list">
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">🔔</div>
+                            <div class="setting-content">
+                                <span>Notifications</span>
+                                <p>Manage your alerts</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">🌐</div>
+                            <div class="setting-content">
+                                <span>Language</span>
+                                <p>Change app language</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Support Section -->
+                <section class="settings-section">
+                    <h3>Support</h3>
+                    <div class="settings-list">
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">❓</div>
+                            <div class="setting-content">
+                                <span>Help Center</span>
+                                <p>Get help and support</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+
+                        <a href="#" class="setting-item">
+                            <div class="setting-icon">📝</div>
+                            <div class="setting-content">
+                                <span>Feedback</span>
+                                <p>Send us your thoughts</p>
+                            </div>
+                            <svg class="arrow-icon" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </section>
+
+                <button class="logout-button" id="logoutBtn">
+                    <span class="logout-icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-link" onclick="handlePageTransition(event, 'index.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm9-8.586 6 6V20H6v-9.586l6-6z"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-link" onclick="handlePageTransition(event, 'discover.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="robot.html" class="nav-link" onclick="handlePageTransition(event, 'robot.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73c.61-.35 1-1.02 1-1.73 0-1.1-.9-2-2-2s-2 .9-2 2c0 .71.39 1.38 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1zM9 12c.83 0 1.5.67 1.5 1.5S9.83 15 9 15s-1.5-.67-1.5-1.5S8.17 12 9 12zm6 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
+            </svg>
+            <span>Robot</span>
+        </a>
+        <a href="userProfile.html" class="nav-link active">
+            <svg viewBox="0 0 24 24" class="nav-icon">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="/Logic/userProfile.js"></script>
+</body>
+</html> 

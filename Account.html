@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Setup</title>
+    <!-- Style -->
+     <link rel="stylesheet" href="/Style/Account.css">
+     <link rel="stylesheet" href="/Style/Color/mode.css">
+     <link rel="stylesheet" href="/Style/navigation/nav.css">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navtop">
+            <a href="Account.html" class="logo">Account Setup</a>
+            <button id="theme-toggle" class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+    
+
+    <div class="container">
+
+        <div class="form-box active" id="login-form">
+            <form action="">
+                <h2>Login</h2>
+                <input type="email" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit" name="login">Login</button>
+                <p>Don't have an account? <a href="#" onclick="showForm('register-form')">Register</a></p>
+            </form>
+        </div>
+
+        <div class="form-box" id="register-form">
+            <form action="">
+                <h2>Register</h2>
+                <input type="text" name="name" placeholder="Name">
+                <input type="tel" name="code" placeholder="Code">
+                <input type="email" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+                <select name="grade" id="grade">
+                    <option value="--select grade--">--Select Grade--</option>
+                    <option value="middle-one">Middle One</option>
+                    <option value="middle-two">Middle Two</option>
+                    <option value="middle-three">Middle Three</option>
+                </select>
+                <select name="class" id="class">
+                    <option value="--select grade--">--Select class--</option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                </select>
+                <button type="submit" name="register">Register</button>
+                <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="/Logic/account.js"></script>
+
+</body>
+</html>
