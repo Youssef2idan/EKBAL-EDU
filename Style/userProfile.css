@@ -42,6 +42,21 @@ body{
     width: 120px;
     height: 120px;
     margin: 0 auto 1rem;
+    background-color: var(--panel-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--secondary-color);
+    cursor: pointer;
+}
+
+.profile-avatar .emoji-avatar {
+    font-size: 60px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-avatar img {
@@ -52,25 +67,9 @@ body{
     border: 3px solid var(--secondary-color);
 }
 
-.edit-avatar-btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--secondary-color);
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
+.edit-avatar-btn,
 .edit-icon {
-    width: 20px;
-    height: 20px;
-    fill: white;
+    display: none;
 }
 
 .profile-name {
@@ -346,4 +345,304 @@ body.dark .toggle-track {
 
 .edit-avatar-btn:active {
     transform: scale(0.95);
+}
+
+/* Add these styles to your existing userProfile.css */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1000;
+    padding-top: 80px;
+    overflow-y: auto;
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-content {
+    background-color: var(--panel-color);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 90%;
+    width: 400px;
+    position: relative;
+    margin: 20px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.modal h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.avatar-selection {
+    margin-bottom: 1.5rem;
+}
+
+.avatar-selection h4 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.avatar-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.avatar-option {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: var(--sec-panel-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-option.selected {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--sec-panel-color);
+    color: var(--text-color);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.save-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background-color: var(--sec-panel-color);
+    color: var(--text-color);
+}
+
+/* Add these new styles */
+body.modal-open {
+    overflow: initial;
+}
+
+/* Dark mode adjustments */
+body.dark .modal-content {
+    background-color: var(--panel-color);
+    color: var(--text-color);
+}
+
+body.dark input,
+body.dark select {
+    background-color: var(--panel-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Theme toggle switch styles */
+.theme-toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    margin-left: auto;
+}
+
+.theme-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.theme-toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.theme-toggle-switch input:checked + label {
+    background-color: var(--secondary-color);
+}
+
+.theme-toggle-switch input:checked + label:before {
+    transform: translateX(30px);
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1000;
+    padding-top: 80px;
+}
+
+.modal-content {
+    background-color: var(--panel-color);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 90%;
+    width: 400px;
+    position: relative;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+}
+
+/* Grade and Class Selection */
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.option-button {
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--panel-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.option-button.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Error Message Styles */
+.error-message {
+    background-color: var(--error-background);
+    color: var(--error-text);
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.error-message::before {
+    content: "⚠️";
+}
+
+/* Animation for modal */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

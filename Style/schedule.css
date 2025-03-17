@@ -1,0 +1,130 @@
+/* Schedule Page Styles */
+.schedule-container {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.current-week {
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.nav-button {
+    background: var(--panel-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-color);
+}
+
+.nav-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.nav-button:hover svg {
+    fill: white;
+}
+
+.timetable {
+    background: var(--panel-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-schedule {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+}
+
+.day-schedule:last-child {
+    border-bottom: none;
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.day-name {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.date {
+    color: var(--black-light-color);
+    font-size: 0.9rem;
+}
+
+.periods {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.period {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--sec-panel-color);
+    border-radius: 8px;
+}
+
+.period-time {
+    min-width: 100px;
+    color: var(--black-light-color);
+    font-size: 0.9rem;
+}
+
+.period-subject {
+    flex-grow: 1;
+    color: var(--text-color);
+}
+
+.period-room {
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+@media (max-width: 768px) {
+    .schedule-container {
+        padding: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .current-week {
+        font-size: 1rem;
+    }
+
+    .period {
+        flex-wrap: wrap;
+    }
+
+    .period-time {
+        min-width: 80px;
+        font-size: 0.8rem;
+    }
+} 
