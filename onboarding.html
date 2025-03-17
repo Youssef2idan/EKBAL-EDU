@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to EKBAL EDU</title>
+    <link rel="stylesheet" href="/Style/onboarding.css">
+    <link rel="stylesheet" href="/Style/Color/mode.css">
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="doby-container">
+            <div class="doby-avatar">🤖</div>
+            <div class="doby-message">
+                <p>Hi! I'm your study assistant !</p>
+                <p>and my name is Doby !</p>
+                <p>I need to know more about you !.</p>
+            </div>
+        </div>
+
+        <div class="steps-container">
+            <!-- Step 1: Name -->
+            <div class="step active" id="nameStep">
+                <h2>What's your name?</h2>
+                <input type="text" id="userName" placeholder="Enter your name" required>
+                <button class="next-btn" onclick="nextStep('nameStep', 'avatarStep')">Next</button>
+            </div>
+
+            <!-- Step 2: Avatar -->
+            <div class="step" id="avatarStep">
+                <h2>Choose your profile picture</h2>
+                <div class="avatar-options">
+                    <div class="avatar-option" data-emoji="😊">😊</div>
+                    <div class="avatar-option" data-emoji="😎">😎</div>
+                    <div class="avatar-option" data-emoji="😜">😜</div>
+                    <div class="avatar-option" data-emoji="😉">😉</div>
+                </div>
+                <button class="next-btn" onclick="nextStep('avatarStep', 'codeStep')">Next</button>
+            </div>
+
+            <!-- Step 3: Student Code -->
+            <div class="step" id="codeStep">
+                <h2>What's your student ID?</h2>
+                <input type="text" id="studentCode" placeholder="Enter your student ID" required>
+                <button class="next-btn" onclick="nextStep('codeStep', 'gradeStep')">Next</button>
+            </div>
+
+            <!-- Step 4: Grade and Class -->
+            <div class="step" id="gradeStep">
+                <h2>Select your grade and class</h2>
+                <select id="grade" required>
+                    <option value="">Select Grade</option>
+                    <option value="middle-one">Middle One</option>
+                    <option value="middle-two">Middle Two</option>
+                    <option value="middle-three">Middle Three</option>
+                </select>
+                <select id="class" required>
+                    <option value="">Select Class</option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                </select>
+                <button class="next-btn" onclick="completeOnboarding()">Finish</button>
+            </div>
+
+            <!-- Welcome Screen -->
+            <div class="step" id="welcomeStep">
+                <div class="welcome-message">
+                    <h1>Welcome, <span id="welcomeName"></span>! 🎉</h1>
+                    <p>I'm getting everything ready for you...</p>
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Logic/onboarding.js"></script>
+</body>
+</html> 

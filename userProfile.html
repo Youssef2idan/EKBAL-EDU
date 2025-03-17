@@ -23,12 +23,7 @@
             <!-- Profile Header -->
             <div class="profile-header">
                 <div class="profile-avatar">
-                    <img src="/Data/images/Profile/default-avatar.png" alt="Profile" id="profileAvatar">
-                    <button class="edit-avatar-btn">
-                        <svg viewBox="0 0 24 24" class="edit-icon">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
-                    </button>
+                    <span class="emoji-avatar" id="profileAvatar"></span>
                 </div>
                 <h2 class="profile-name">Youssef Zidan</h2>
                 <p class="profile-info">Class 2-C • Student ID: 468928304</p>
@@ -46,7 +41,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-value">15</span>
-                    <span class="stat-label">Assignments</span>
+                    <span class="stat-label">Results</span>
                 </div>
             </div>
 
@@ -56,7 +51,7 @@
                 <section class="settings-section">
                     <h3>Account Settings</h3>
                     <div class="settings-list">
-                        <a href="#" class="setting-item">
+                        <div class="setting-item" data-action="edit-profile">
                             <div class="setting-icon">👤</div>
                             <div class="setting-content">
                                 <span>Personal Information</span>
@@ -65,7 +60,7 @@
                             <svg class="arrow-icon" viewBox="0 0 24 24">
                                 <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
                             </svg>
-                        </a>
+                        </div>
 
                         <a href="#" class="setting-item">
                             <div class="setting-icon">🔒</div>
@@ -78,15 +73,16 @@
                             </svg>
                         </a>
 
-                        <div class="setting-item">
-                            <div class="setting-icon">🌙</div>
+                        <div class="setting-item" id="theme-toggle">
+                            <div class="setting-icon">🌓</div>
                             <div class="setting-content">
                                 <span>Dark Mode</span>
-                                <p>Switch app theme</p>
+                                <p>Toggle dark/light theme</p>
                             </div>
-                            <button id="theme-toggle" class="theme-toggle">
-                                <span class="toggle-track"></span>
-                            </button>
+                            <div class="theme-toggle-switch">
+                                <input type="checkbox" id="theme-switch">
+                                <label for="theme-switch"></label>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -152,6 +148,54 @@
                     Logout
                 </button>
             </div>
+
+            <!-- Add this after the settings-sections div -->
+            <div id="editProfileModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Edit Profile</h2>
+                    <div id="errorContainer"></div>
+                    <form id="editProfileForm">
+                        <div class="form-group">
+                            <label for="editName">Name</label>
+                            <input type="text" id="editName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Grade</label>
+                            <div class="selection-grid" id="gradeOptions">
+                                <button type="button" class="option-button" data-value="1">Grade 1</button>
+                                <button type="button" class="option-button" data-value="2">Grade 2</button>
+                                <button type="button" class="option-button" data-value="3">Grade 3</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Class</label>
+                            <div class="selection-grid" id="classOptions">
+                                <button type="button" class="option-button" data-value="A">Class A</button>
+                                <button type="button" class="option-button" data-value="B">Class B</button>
+                                <button type="button" class="option-button" data-value="C">Class C</button>
+                            </div>
+                        </div>
+
+                        <div class="avatar-selection">
+                            <label>Choose Avatar</label>
+                            <div class="avatar-options">
+                                <div class="avatar-option" data-emoji="😊">😊</div>
+                                <div class="avatar-option" data-emoji="😎">😎</div>
+                                <div class="avatar-option" data-emoji="😜">😜</div>
+                                <div class="avatar-option" data-emoji="😉">😉</div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-buttons">
+                            <button type="submit" class="save-btn">Save Changes</button>
+                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -169,11 +213,11 @@
             </svg>
             <span>Discover</span>
         </a>
-        <a href="robot.html" class="nav-link" onclick="handlePageTransition(event, 'robot.html')">
+        <a href="doby.html" class="nav-link" onclick="handlePageTransition(event, 'doby.html')">
             <svg viewBox="0 0 24 24" class="nav-icon">
                 <path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73c.61-.35 1-1.02 1-1.73 0-1.1-.9-2-2-2s-2 .9-2 2c0 .71.39 1.38 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1zM9 12c.83 0 1.5.67 1.5 1.5S9.83 15 9 15s-1.5-.67-1.5-1.5S8.17 12 9 12zm6 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
             </svg>
-            <span>Robot</span>
+            <span>Doby</span>
         </a>
         <a href="userProfile.html" class="nav-link active">
             <svg viewBox="0 0 24 24" class="nav-icon">
@@ -183,6 +227,10 @@
         </a>
     </nav>
 
+    <!-- Add this before the other scripts -->
+    <script src="/Logic/shared/theme.js"></script>
+    <script src="/Logic/shared/auth.js"></script>
+    <script src="/Logic/shared/transitions.js"></script>
     <script src="/Logic/userProfile.js"></script>
 </body>
 </html> 

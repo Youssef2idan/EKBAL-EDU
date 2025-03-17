@@ -37,14 +37,14 @@
                         <p>Access study materials</p>
                     </div>
                 </a>
-                <a href="robot.html" class="feature-card">
+                <a href="doby.html" class="feature-card" onclick="handlePageTransition(event, 'doby.html')">
                     <div class="feature-icon">🤖</div>
                     <div class="feature-info">
-                        <h3>AI Robot</h3>
+                        <h3>Doby AI</h3>
                         <p>Get instant answers</p>
                     </div>
                 </a>
-                <a href="marks.html" class="feature-card">
+                <a href="marks.html" class="feature-card" onclick="handlePageTransition(event, 'marks.html')">
                     <div class="feature-icon">📊</div>
                     <div class="feature-info">
                         <h3>Marks</h3>
@@ -129,11 +129,11 @@
             </svg>
             <span>Discover</span>
         </a>
-        <a href="robot.html" class="nav-link" onclick="handlePageTransition(event, 'robot.html')">
+        <a href="doby.html" class="nav-link" onclick="handlePageTransition(event, 'doby.html')">
             <svg viewBox="0 0 24 24" class="nav-icon">
                 <path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73c.61-.35 1-1.02 1-1.73 0-1.1-.9-2-2-2s-2 .9-2 2c0 .71.39 1.38 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1zM9 12c.83 0 1.5.67 1.5 1.5S9.83 15 9 15s-1.5-.67-1.5-1.5S8.17 12 9 12zm6 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
             </svg>
-            <span>Robot</span>
+            <span>Doby AI</span>
         </a>
         <a href="userProfile.html" class="nav-link" onclick="handlePageTransition(event, 'userProfile.html')">
             <svg viewBox="0 0 24 24" class="nav-icon">
@@ -143,7 +143,9 @@
         </a>
     </nav>
 
+    <script src="/Logic/shared/theme.js"></script>
     <script src="/Logic/Discover.js"></script>
     <script src="/Logic/shared/transitions.js"></script>
+    <script src="/Logic/shared/auth.js"></script>
 </body>
 </html>
