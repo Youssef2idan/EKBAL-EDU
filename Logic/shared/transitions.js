@@ -1,20 +1,23 @@
 // Page Transition Handler
-function setupPageTransitions() {
-    const transitionOverlay = document.querySelector('.page-transition-overlay');
-    const mainContent = document.querySelector('.main-content');
+function handlePageTransition(event, targetPage) {
+    event.preventDefault();
     
-    window.handlePageTransition = (event, targetPage) => {
-        event.preventDefault();
-        
-        // Start fade out animation
-        mainContent.classList.add('fade-out');
-        transitionOverlay.classList.add('active');
-        
-        setTimeout(() => {
-            window.location.href = targetPage;
-        }, 300);
-    };
+    // Get the transition overlay
+    const overlay = document.querySelector('.page-transition-overlay');
+    
+    // Add the active class to start the transition
+    overlay.classList.add('active');
+
+    // Wait for the transition animation
+    setTimeout(() => {
+        window.location.href = targetPage;
+    }, 300);
 }
 
-// Initialize transitions when DOM is loaded
-document.addEventListener('DOMContentLoaded', setupPageTransitions); 
+// When the page loads, remove the active class from the overlay
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.querySelector('.page-transition-overlay');
+    if (overlay) {
+        overlay.classList.remove('active');
+    }
+}); 
