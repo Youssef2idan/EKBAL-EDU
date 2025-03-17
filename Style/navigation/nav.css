@@ -61,13 +61,13 @@ body.dark-mode .dark-mode-toggle::before {
 
 
 
-/* Bottom Navigation Bar */
-
+/* Updated Navigation Bar Styles */
 .navbar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100%;
     height: 3rem;
     background-color: var(--panel-color);
     display: flex;
@@ -80,6 +80,7 @@ body.dark-mode .dark-mode-toggle::before {
 }
 
 .nav-link {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
