@@ -4,226 +4,282 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceBtn = document.getElementById('voiceBtn');
     const chatMessages = document.getElementById('chatMessages');
     const quickActions = document.querySelectorAll('.action-btn');
-    const mainOptions = document.querySelectorAll('.option-btn');
-    const subOptionsContainer = document.querySelector('.sub-options');
-    const contentDisplay = document.querySelector('.content-display');
+    const newChatBtn = document.querySelector('.new-chat');
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
 
     let isListening = false;
+    let chatHistory = [];
+    let isProcessing = false;
 
-    // Options data structure
-    const optionsData = {
+    // AI Response Categories
+    const aiResponses = {
         videos: {
-            title: 'Educational Videos',
-            subOptions: ['Lecture Videos', 'Tutorial Videos', 'Practice Videos'],
-            content: {
-                'Lecture Videos': [
-                    { title: 'Introduction to Calculus', size: '250MB', link: '#' },
-                    { title: 'Advanced Algebra', size: '180MB', link: '#' }
-                ],
-                'Tutorial Videos': [
-                    { title: 'Problem Solving Techniques', size: '200MB', link: '#' },
-                    { title: 'Step-by-Step Solutions', size: '150MB', link: '#' }
-                ],
-                'Practice Videos': [
-                    { title: 'Practice Problems Set 1', size: '220MB', link: '#' },
-                    { title: 'Practice Problems Set 2', size: '190MB', link: '#' }
-                ]
+            keywords: ['video', 'watch', 'tutorial', 'lecture'],
+            subCategories: {
+                lectures: ['calculus', 'algebra', 'physics', 'chemistry'],
+                tutorials: ['problem solving', 'exam prep', 'study tips'],
+                practice: ['exercises', 'examples', 'solutions']
             }
         },
         sheets: {
-            title: 'Study Sheets',
-            subOptions: ['Explanation Sheets', 'Revision Sheets', 'Exercise Sheets'],
-            content: {
-                'Explanation Sheets': [
-                    { title: 'Algebra Concepts', size: '2.5MB', link: '#' },
-                    { title: 'Geometry Basics', size: '1.8MB', link: '#' }
-                ],
-                'Revision Sheets': [
-                    { title: 'Quick Review Guide', size: '1.5MB', link: '#' },
-                    { title: 'Final Exam Prep', size: '2.0MB', link: '#' }
-                ],
-                'Exercise Sheets': [
-                    { title: 'Practice Problems', size: '1.2MB', link: '#' },
-                    { title: 'Challenge Questions', size: '1.7MB', link: '#' }
-                ]
+            keywords: ['sheet', 'document', 'notes', 'pdf'],
+            subCategories: {
+                explanation: ['concept notes', 'theory', 'formulas'],
+                revision: ['summary', 'quick review', 'key points'],
+                exercises: ['practice problems', 'worksheets', 'assignments']
             }
         },
-        // Add more options as needed
+        questions: {
+            keywords: ['question', 'problem', 'solve', 'answer'],
+            types: ['multiple choice', 'short answer', 'detailed solution']
+        }
     };
 
-    // Function to add a message to the chat
-    function addMessage(message, isUser = false) {
+    // Message Processing
+    async function processUserMessage(message) {
+        const lowerMessage = message.toLowerCase();
+        let response = '';
+
+        // Check for resource requests
+        if (aiResponses.videos.keywords.some(k => lowerMessage.includes(k))) {
+            response = handleResourceRequest('videos', lowerMessage);
+        } else if (aiResponses.sheets.keywords.some(k => lowerMessage.includes(k))) {
+            response = handleResourceRequest('sheets', lowerMessage);
+        } else if (aiResponses.questions.keywords.some(k => lowerMessage.includes(k))) {
+            response = handleQuestionRequest(lowerMessage);
+        } else {
+            response = await generateGeneralResponse(lowerMessage);
+        }
+
+        return response;
+    }
+
+    // Resource Request Handler
+    function handleResourceRequest(type, message) {
+        const resources = aiResponses[type];
+        let response = `I can help you find ${type}. What specific type are you looking for?\n\n`;
+        
+        if (type === 'videos' || type === 'sheets') {
+            Object.entries(resources.subCategories).forEach(([category, topics]) => {
+                response += `📁 ${category.charAt(0).toUpperCase() + category.slice(1)}:\n`;
+                topics.forEach(topic => {
+                    response += `   • ${topic}\n`;
+                });
+                response += '\n';
+            });
+        }
+
+        return response;
+    }
+
+    // Question Request Handler
+    function handleQuestionRequest(message) {
+        const subjects = ['math', 'physics', 'chemistry', 'biology'];
+        const subject = subjects.find(s => message.includes(s)) || 'general';
+        
+        return `I can help you with ${subject} questions. Would you like:\n\n` +
+               `1. Practice questions\n` +
+               `2. Step-by-step solutions\n` +
+               `3. Quick concept check\n\n` +
+               `Just let me know your preference!`;
+    }
+
+    // General Response Generator
+    async function generateGeneralResponse(message) {
+        // Simulate AI processing
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        if (message.includes('help')) {
+            return "I'm here to help! I can:\n\n" +
+                   "1. Find educational videos\n" +
+                   "2. Provide study sheets\n" +
+                   "3. Generate practice questions\n" +
+                   "4. Explain concepts\n\n" +
+                   "What would you like to focus on?";
+        }
+
+        // Add more response patterns here
+        return "I understand you're asking about " + message + ". How can I help you with that?";
+    }
+
+    // Message Display with Typing Effect
+    async function addMessage(message, isUser = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
         
-        messageDiv.innerHTML = `
-            <div class="message-avatar"></div>
-            <div class="message-content">
-                <p>${message}</p>
-            </div>
-        `;
-        
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        if (!isUser) {
+            messageDiv.innerHTML = `
+                <div class="ai-avatar">
+                    <div class="avatar-core"></div>
+                </div>
+                <div class="message-content">
+                    <p class="typing"></p>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Typing effect
+            const typingElement = messageDiv.querySelector('.typing');
+            await typeMessage(message, typingElement);
+        } else {
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${message}</p>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatHistory.push({ message, isUser });
+        updateChatHistory();
     }
 
-    // Quick action button handlers
-    const actionResponses = {
-        'homework': "I'm ready to help with your homework! What subject are you working on?",
-        'study': "Let's create a study plan together. What are your current goals?",
-        'practice': "I can generate practice questions for you. Which topic would you like to focus on?",
-        'explain': "I'd be happy to explain any topic. What would you like to learn about?"
-    };
+    // Typing Effect Function
+    async function typeMessage(message, element) {
+        const words = message.split(' ');
+        for (let i = 0; i < words.length; i++) {
+            element.textContent += words[i] + ' ';
+            await new Promise(resolve => setTimeout(resolve, 50));
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
 
+    // Send Message Handler
+    async function sendMessage() {
+        if (isProcessing) return;
+
+        const message = messageInput.value.trim();
+        if (message) {
+            isProcessing = true;
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Add user message
+            await addMessage(message, true);
+
+            // Process and add AI response
+            const response = await processUserMessage(message);
+            await addMessage(response, false);
+
+            isProcessing = false;
+
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+            }
+        }
+    }
+
+    // Event Listeners
+    messageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    messageInput.addEventListener('input', () => {
+        messageInput.style.height = 'auto';
+        messageInput.style.height = messageInput.scrollHeight + 'px';
+    });
+
+    // Quick Actions
     quickActions.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const action = btn.classList[1];
-            addMessage(actionResponses[action]);
+        btn.addEventListener('click', async () => {
+            const action = btn.textContent.split(' ')[1].toLowerCase();
+            const responses = {
+                'help': "What subject do you need help with? I can assist with:\n\n" +
+                        "• Mathematics\n• Physics\n• Chemistry\n• Biology\n• Literature\n\n" +
+                        "Just let me know the subject and topic!",
+                'plan': "Let's create a study plan! Please tell me:\n\n" +
+                        "1. Your current subjects\n" +
+                        "2. Goals/targets\n" +
+                        "3. Available study time\n" +
+                        "4. Preferred learning style",
+                'questions': "I can generate practice questions. Choose a subject:\n\n" +
+                            "1. Mathematics\n2. Physics\n3. Chemistry\n4. Biology\n\n" +
+                            "Then specify the topic and difficulty level.",
+                'topic': "What topic would you like me to explain? I can help with:\n\n" +
+                        "• Basic concepts\n• Complex theories\n• Problem-solving methods\n" +
+                        "• Exam preparation\n\nJust name the subject and topic!"
+            };
+            await addMessage(responses[action], false);
         });
     });
 
-    // Send message handler
-    function sendMessage() {
-        const message = messageInput.value.trim();
-        if (message) {
-            addMessage(message, true);
-            messageInput.value = '';
-            
-            // Simulate AI thinking
-            setTimeout(() => {
-                processUserInput(message);
-            }, 1000);
-        }
-    }
-
-    // Process user input and generate response
-    function processUserInput(message) {
-        let response;
-        
-        // Simple response logic - can be expanded
-        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-            response = "Hello! How can I help you with your studies today?";
-        } else if (message.toLowerCase().includes('help')) {
-            response = "I'm here to help! What subject would you like assistance with?";
-        } else if (message.toLowerCase().includes('thank')) {
-            response = "You're welcome! Let me know if you need anything else.";
-        } else {
-            response = "I understand. Would you like me to explain this topic in more detail?";
-        }
-        
-        addMessage(response);
-    }
-
-    // Voice input handler
+    // Voice Input Handler
+    voiceBtn.addEventListener('click', toggleVoiceInput);
+    
     function toggleVoiceInput() {
         if (!isListening && 'webkitSpeechRecognition' in window) {
             const recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
-
-            recognition.onstart = () => {
-                isListening = true;
-                voiceBtn.style.backgroundColor = '#ff4444';
-            };
-
+            
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
                 messageInput.value = transcript;
                 sendMessage();
             };
-
-            recognition.onend = () => {
-                isListening = false;
-                voiceBtn.style.backgroundColor = '';
-            };
-
+            
             recognition.start();
+            isListening = true;
+            voiceBtn.classList.add('listening');
         } else if (isListening) {
             recognition.stop();
+            isListening = false;
+            voiceBtn.classList.remove('listening');
         }
     }
 
-    // Event listeners
+    // Mobile Menu Handlers
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (sidebar.classList.contains('active') && 
+            !sidebar.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('active');
+        }
+    });
+
+    // Initialize
     sendBtn.addEventListener('click', sendMessage);
-    voiceBtn.addEventListener('click', toggleVoiceInput);
-    
-    messageInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    // Animation for avatar
-    const avatarCore = document.querySelector('.avatar-core');
-    
-    function pulseAnimation() {
-        avatarCore.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-            avatarCore.style.transform = 'scale(1)';
-        }, 200);
-    }
-
-    // Pulse animation when AI responds
-    setInterval(pulseAnimation, 3000);
-
-    // Handle main option selection
-    mainOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            const type = option.classList[1];
-            if (optionsData[type]) {
-                showSubOptions(type);
-            }
-        });
-    });
-
-    // Show sub-options
-    function showSubOptions(type) {
-        subOptionsContainer.style.display = 'grid';
-        subOptionsContainer.innerHTML = optionsData[type].subOptions
-            .map(subOption => `
-                <button class="sub-option-btn" data-type="${type}" data-sub="${subOption}">
-                    ${subOption}
-                </button>
-            `).join('');
-
-        // Handle sub-option selection
-        const subOptions = document.querySelectorAll('.sub-option-btn');
-        subOptions.forEach(subOption => {
-            subOption.addEventListener('click', () => {
-                const type = subOption.dataset.type;
-                const sub = subOption.dataset.sub;
-                showContent(type, sub);
-            });
-        });
-    }
-
-    // Show content
-    function showContent(type, subOption) {
-        contentDisplay.style.display = 'block';
-        const content = optionsData[type].content[subOption];
-        
-        contentDisplay.innerHTML = `
-            <h3>${subOption}</h3>
-            ${content.map(item => `
-                <div class="content-card">
-                    <div class="content-info">
-                        <h4>${item.title}</h4>
-                        <span>${item.size}</span>
-                    </div>
-                    <button class="download-btn" data-link="${item.link}">
-                        Download
-                    </button>
+    newChatBtn.addEventListener('click', () => {
+        chatMessages.innerHTML = `
+            <div class="welcome-message">
+                <div class="ai-avatar">
+                    <div class="avatar-ring"></div>
+                    <div class="avatar-core"></div>
                 </div>
-            `).join('')}
+                <h1>Hello! I'm Doby AI</h1>
+                <p>I'm here to help you with your studies. What would you like to learn today?</p>
+            </div>
         `;
+        chatHistory = [];
+        updateChatHistory();
+    });
 
-        // Handle downloads
-        const downloadButtons = document.querySelectorAll('.download-btn');
-        downloadButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Implement download functionality
-                alert('Download started!');
-            });
-        });
+    // Update chat history in sidebar
+    function updateChatHistory() {
+        const historyList = document.querySelector('.history-list');
+        historyList.innerHTML = chatHistory
+            .filter(chat => chat.isUser)
+            .slice(-5)
+            .reverse()
+            .map(chat => `
+                <button class="history-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+                    </svg>
+                    ${chat.message.substring(0, 30)}${chat.message.length > 30 ? '...' : ''}
+                </button>
+            `)
+            .join('');
     }
 }); 

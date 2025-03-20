@@ -1,88 +1,170 @@
-// Add this at the top of the file, outside any other functions
-const moreButton = document.getElementById('moreBtn');
-const moreMenu = document.getElementById('moreMenu');
-const closeMenu = document.getElementById('closeMenu');
-
-moreButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    moreMenu.classList.add('active');
-});
-
-closeMenu.addEventListener('click', () => {
-    moreMenu.classList.remove('active');
-});
-
-document.addEventListener('click', (e) => {
-    if (!moreMenu.contains(e.target) && !moreButton.contains(e.target)) {
-        moreMenu.classList.remove('active');
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
-    const modeToggle = document.querySelector('.mode-toggle');
-    const body = document.querySelector('body');
-    const gradeSelect = document.getElementById('gradeSelect');
     const studentCode = document.getElementById('studentCode');
     const getMarksBtn = document.getElementById('getMarks');
     const resultsContainer = document.getElementById('resultsContainer');
-    const myDataBtn = document.getElementById('myDataBtn');
+    const monthOne = document.getElementById('monthOne');
+    const monthTwo = document.getElementById('monthTwo');
 
-    // Dark mode handler
-    let getMode = localStorage.getItem("mode");
-    if(getMode && getMode === "dark") {
-        body.classList.toggle("dark");
-    }
+    let selectedMonth = null;
 
-    modeToggle.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        localStorage.setItem("mode", body.classList.contains("dark") ? "dark" : "light");
+    // Month selection handlers
+    monthOne.addEventListener('click', () => {
+        selectedMonth = 'one';
+        monthOne.classList.add('active');
+        monthTwo.classList.remove('active');
     });
 
-    // My Data button handler
-    myDataBtn.addEventListener('click', async () => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (!userData || !userData.studentCode) {
-            showError('Please log in to view your marks');
-            return;
-        }
-
-        const timePeriod = gradeSelect.value;
-        if (!timePeriod) {
-            showError('Please select a time period');
-            return;
-        }
-
-        try {
-            const marks = await fetchMarks(userData.studentCode, timePeriod);
-            displayMarks(marks);
-        } catch (error) {
-            showError('Failed to fetch marks. Please try again.');
-        }
+    monthTwo.addEventListener('click', () => {
+        selectedMonth = 'two';
+        monthTwo.classList.add('active');
+        monthOne.classList.remove('active');
     });
 
-    // Manual search handler
+    // Get marks button handler
     getMarksBtn.addEventListener('click', async () => {
         const code = studentCode.value.trim();
-        const timePeriod = gradeSelect.value;
 
         if (!code) {
             showError('Please enter a student code');
             return;
         }
 
-        if (!timePeriod) {
-            showError('Please select a time period');
+        if (!selectedMonth) {
+            showError('Please select a month');
             return;
         }
 
         try {
-            const marks = await fetchMarks(code, timePeriod);
-            displayMarks(marks);
+            const marks = await fetchMarks(code, selectedMonth);
+            if (marks) {
+                displayMarks(marks);
+            } else {
+                showError('No data found for this student code');
+            }
         } catch (error) {
+            console.error('Error:', error);
             showError('Failed to fetch marks. Please try again.');
         }
     });
+
+    async function fetchMarks(studentCode, month) {
+        try {
+            // Fix the file path for month two
+            const filePath = month === 'one' 
+                ? '/Data/Marks/Control/month_one/m1sm.json'
+                : '/Data/Marks/Control/month_two/m2sm.json';  // Changed from m1sm.json to m2sm.json
+            
+            const response = await fetch(filePath);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Find the student data
+            const studentData = data.find(student => student['كود الطالب'] === studentCode);
+            
+            if (!studentData) return null;
+
+            return {
+                name: studentData['اسم'],
+                subjects: [
+                    { name: 'Arabic', score: studentData['Arabic'] },
+                    { name: 'English', score: studentData['English'] },
+                    { name: 'Math', score: studentData['Math'] },
+                    { name: 'Science', score: studentData['Science'] },
+                    { name: 'Social Studies', score: studentData['Social studies'] },
+                    { name: 'H.L', score: studentData['H.L'] },
+                    { name: 'Art', score: studentData['ART'] },
+                    { name: 'Computer', score: studentData['Computer'] },
+                    { name: 'Religion', score: studentData['Religion'] },
+                    { name: 'French', score: studentData['French'] }
+                ]
+            };
+        } catch (error) {
+            console.error('Error details:', error);
+            throw error;
+        }
+    }
+
+    function displayMarks(data) {
+        resultsContainer.setAttribute('data-student', JSON.stringify(data));
+        resultsContainer.innerHTML = `
+            <div class="student-info">
+                <h2>${data.name}</h2>
+                <div class="marks-grid">
+                    ${data.subjects.map(subject => `
+                        <div class="subject-card">
+                            <h3>${subject.name}</h3>
+                            <p class="score">${subject.score}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="download-btn" onclick="downloadCertificate()">Download Certificate</button>
+            </div>
+        `;
+    }
+
+    async function downloadCertificate() {
+        const studentData = JSON.parse(resultsContainer.getAttribute('data-student'));
+        const certificateCard = document.getElementById('certificateCard');
+        const certificateOverlay = document.getElementById('certificateOverlay');
+        const certStudentName = document.getElementById('certStudentName');
+        const certMarksGrid = document.getElementById('certMarksGrid');
+        const certDate = document.getElementById('certDate');
+        
+        // Update certificate content
+        certStudentName.textContent = studentData.name;
+        
+        // Update marks grid
+        certMarksGrid.innerHTML = studentData.subjects.map(subject => `
+            <div class="subject-box">
+                <div class="subject-name">${subject.name}</div>
+                <div class="subject-score">${subject.score}</div>
+            </div>
+        `).join('');
+        
+        // Update date
+        const today = new Date();
+        certDate.textContent = today.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        // Show overlay and certificate
+        certificateOverlay.style.display = 'block';
+        certificateCard.style.display = 'block';
+        
+        // Wait a bit to ensure elements are rendered
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        try {
+            const canvas = await html2canvas(certificateCard, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                logging: false,
+                useCORS: true
+            });
+            
+            const image = canvas.toDataURL('image/png', 1.0);
+            const link = document.createElement('a');
+            link.download = `EDU-Certificate-${studentData.name}.png`;
+            link.href = image;
+            link.click();
+            
+            // Hide overlay and certificate after capture
+            certificateOverlay.style.display = 'none';
+            certificateCard.style.display = 'none';
+        } catch (error) {
+            console.error('Error generating certificate:', error);
+            showError('Failed to generate certificate. Please try again.');
+            // Hide overlay and certificate on error
+            certificateOverlay.style.display = 'none';
+            certificateCard.style.display = 'none';
+        }
+    }
 
     function showError(message) {
         resultsContainer.innerHTML = `
@@ -93,38 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    async function fetchMarks(studentCode, timePeriod) {
-        // This is a mock function - replace with actual API call
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    subjects: [
-                        { name: 'Mathematics', grade: 'A+', score: 95, trend: '+5%' },
-                        { name: 'Science', grade: 'A', score: 88, trend: '+3%' },
-                        { name: 'English', grade: 'B+', score: 82, trend: '-2%' }
-                    ]
-                });
-            }, 1000);
-        });
-    }
-
-    function displayMarks(data) {
-        resultsContainer.innerHTML = data.subjects.map(subject => `
-            <div class="subject-card">
-                <div class="subject-header">
-                    <h3>${subject.name}</h3>
-                    <span class="grade">${subject.grade}</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: ${subject.score}%"></div>
-                </div>
-                <div class="marks-details">
-                    <span>${subject.score}/100</span>
-                    <span class="trend ${subject.trend.includes('+') ? 'positive' : 'negative'}">
-                        ${subject.trend}
-                    </span>
-                </div>
-            </div>
-        `).join('');
-    }
+    // Add global function for download
+    window.downloadCertificate = downloadCertificate;
 });
