@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Timetable</title>
+    <link rel="stylesheet" href="/Style/timetable.css">
+    <link rel="stylesheet" href="/Style/navigation/nav.css">
+    <link rel="stylesheet" href="/Style/Color/mode.css">
+    <link rel="stylesheet" href="/Style/shared/transitions.css">
+</head>
+<body>
+    <div class="page-transition-overlay"></div>
+
+    <header class="header">
+        <nav class="navtop">
+            <a href="timetable.html" class="logo">Timetable</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="selection-controls">
+            <select id="gradeSelect" class="select-field">
+                <option value="">Select Grade</option>
+                <option value="middle1">Middle 1</option>
+                <option value="middle2">Middle 2</option>
+            </select>
+            
+            <select id="classSelect" class="select-field" disabled>
+                <option value="">Select Class</option>
+                <option value="a">Class A</option>
+                <option value="b">Class B</option>
+                <option value="c">Class C</option>
+            </select>
+
+            <button id="getMyData" class="my-data-btn">My Data</button>
+        </div>
+
+        <div class="timetable-view">
+            <div class="placeholder" id="placeholder">
+                <span class="placeholder-icon">📅</span>
+                <p>Select your grade and class to view timetable</p>
+            </div>
+            
+            <div class="timetable-container">
+                <!-- Middle 1 Timetables -->
+                <img src="Data/images/timetable/middle1/middle1a.jpg" alt="Middle 1-A Timetable" class="timetable" id="middle1a-timetable">
+                <img src="Data/images/timetable/middle1/middle1b.jpg" alt="Middle 1-B Timetable" class="timetable" id="middle1b-timetable">
+                <img src="Data/images/timetable/middle1/middle1c.jpg" alt="Middle 1-C Timetable" class="timetable" id="middle1c-timetable">
+                
+                <!-- Middle 2 Timetables -->
+                <img src="Data/images/timetable/middle2/middle2a.jpg" alt="Middle 2-A Timetable" class="timetable" id="middle2a-timetable">
+                <img src="Data/images/timetable/middle2/middle2b.jpg" alt="Middle 2-B Timetable" class="timetable" id="middle2b-timetable">
+                <img src="Data/images/timetable/middle2/middle2c.jpg" alt="Middle 2-C Timetable" class="timetable" id="middle2c-timetable">
+            </div>
+        </div>
+    </main>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link" onclick="handlePageTransition(event, 'index.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm9-8.586 6 6V20H6v-9.586l6-6z"/></svg>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-link" onclick="handlePageTransition(event, 'discover.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
+            <span>Discover</span>
+        </a>
+        <a href="doby.html" class="nav-link" onclick="handlePageTransition(event, 'doby.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73c.61-.35 1-1.02 1-1.73 0-1.1-.9-2-2-2s-2 .9-2 2c0 .71.39 1.38 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1zM9 12c.83 0 1.5.67 1.5 1.5S9.83 15 9 15s-1.5-.67-1.5-1.5S8.17 12 9 12zm6 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/></svg>
+            <span>Doby</span>
+        </a>
+        <a href="userProfile.html" class="nav-link" onclick="handlePageTransition(event, 'userProfile.html')">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="/Logic/shared/theme.js"></script>
+    <script src="/Logic/shared/transitions.js"></script>
+    <script src="/Logic/shared/auth.js"></script>
+    <script src="/Logic/timetable.js"></script>
+</body>
+</html>

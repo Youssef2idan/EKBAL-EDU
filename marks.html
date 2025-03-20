@@ -22,13 +22,10 @@
 
     <div class="container">
         <div class="search-section">
-            <select id="gradeSelect" class="input-field">
-                <option value="">Select Time Zone</option>
-                <option value="monthly1">Month One</option>
-                <option value="monthly2">Month Two</option>
-                <option value="term1">First Term</option>
-                <option value="term2">Second Term</option>
-            </select>
+            <div class="month-buttons">
+                <button id="monthOne" class="month-btn">Month One</button>
+                <button id="monthTwo" class="month-btn">Month Two</button>
+            </div>
             
             <input type="text" id="studentCode" class="input-field" placeholder="Enter Student Code">
             
@@ -37,6 +34,36 @@
 
         <div id="resultsContainer" class="results-container">
             <!-- Results will be displayed here -->
+        </div>
+
+        <!-- Add the overlay div just before the certificate card -->
+        <div id="certificateOverlay" class="certificate-overlay"></div>
+        <div id="certificateCard" class="certificate-card">
+            <div class="certificate-content">
+                <div class="certificate-header">
+                    <h1>Education</h1>
+                    <h2>Boys Department</h2>
+                    <p class="academic-year">Academic Year 2025-2026</p>
+                </div>
+                
+                <div class="certificate-body">
+                    <h3 id="certStudentName" class="student-name"></h3>
+                    
+                    <div id="certMarksGrid" class="marks-grid">
+                        <!-- Marks will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="certificate-footer">
+                    <div class="footer-content">
+                        <p class="date">Issue Date: <span id="certDate"></span></p>
+                        <div class="control-head">
+                            <p class="control-title">Head of Control</p>
+                            <p class="control-name">Mr. Hasan Magdy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
