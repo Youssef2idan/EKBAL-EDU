@@ -126,46 +126,45 @@ body.dark .switch:before {
 }
 
 .search-section {
-    background-color: var(--panel-color);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    border-left: 4px solid var(--secondary-color);
+    padding: 1rem;
+    background: var(--panel-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-field {
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--border-color);
+    padding: 0.8rem;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
+    width: 100%;
+    background: var(--panel-color);
     color: var(--text-color);
-    background-color: var(--primary-color);
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .input-field:focus {
-    outline: none;
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0 2px rgba(14, 75, 241, 0.1);
+    outline: none;
 }
 
 .search-btn {
-    padding: 0.8rem 1.5rem;
-    background-color: var(--secondary-color);
+    padding: 0.8rem;
+    background: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
     cursor: pointer;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .search-btn:hover {
     opacity: 0.9;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .results-container {
@@ -174,7 +173,6 @@ body.dark .switch:before {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: none;
     border-top: 4px solid var(--secondary-color);
 }
 
@@ -205,9 +203,10 @@ body.dark .switch:before {
 
 .marks-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    padding: 1rem;
 }
 
 .mark-item {
@@ -279,23 +278,24 @@ body.dark .switch:before {
 
 /* Download button styles */
 .download-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 2rem auto 0;
     padding: 0.8rem 1.5rem;
-    background-color: var(--secondary-color);
+    background: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1rem;
+    font-weight: 500;
+    text-align: center;
 }
 
 .download-btn:hover {
     opacity: 0.9;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .download-icon {
@@ -530,31 +530,26 @@ body.dark .menu-item:hover {
 
 .subject-card {
     background: var(--panel-color);
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .subject-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.subject-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.subject-header h3 {
-    font-size: 1.2rem;
+.subject-card h3 {
     color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
 }
 
-.grade {
-    font-size: 1.5rem;
-    font-weight: 600;
+.score {
+    font-size: 1.8rem;
+    font-weight: bold;
     color: var(--secondary-color);
 }
 
@@ -610,4 +605,226 @@ body.dark .menu-item:hover {
     .subjects-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.month-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.month-btn {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--secondary-color);
+    background: transparent;
+    color: var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    outline: none;
+}
+
+.month-btn:hover {
+    background: rgba(14, 75, 241, 0.1);
+}
+
+.month-btn.active {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.student-info h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--danger-color);
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.error-icon {
+    font-size: 1.2rem;
+}
+
+/* Certificate Styles */
+.certificate-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    background: #ffffff;
+    padding: 2rem;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.certificate-content {
+    border: 2px solid #0E4BF1;
+    padding: 3rem;
+    position: relative;
+    background: #ffffff;
+    border-radius: 12px;
+}
+
+.certificate-content::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(14, 75, 241, 0.3);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.certificate-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.certificate-header h1 {
+    color: #0E4BF1;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.certificate-header h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.academic-year {
+    color: #666;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.certificate-body {
+    margin: 2rem 0;
+}
+
+.student-name {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.student-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: #0E4BF1;
+}
+
+.marks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.subject-box {
+    background: rgba(14, 75, 241, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(14, 75, 241, 0.1);
+}
+
+.subject-name {
+    color: #333;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.subject-score {
+    color: #0E4BF1;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.certificate-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(14, 75, 241, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.date {
+    color: #666;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.control-head {
+    text-align: center;
+}
+
+.control-title {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.control-name {
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+    position: relative;
+    padding-top: 0.5rem;
+}
+
+.control-name::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: #0E4BF1;
+}
+
+/* Add overlay for certificate background */
+.certificate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
 }

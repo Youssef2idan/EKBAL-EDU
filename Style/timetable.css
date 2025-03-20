@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+:root {
+    --primary-color: #fff;
+    --secondary-color: #0E4BF1;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+body.dark {
+    --primary-color: #3A3B3C;
+    --panel-color: #242526;
+    --text-color: #CCC;
+    --black-light-color: #CCC;
+    --border-color: #4D4C4C;
+    --toggle-color: #FFF;
+}
+
+/* Header styles */
+.header .navtop {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3.7rem;
+    padding: 0 1.2rem;
+    justify-content: space-between;
+    background-color: var(--panel-color);
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(14, 75, 241, 0.1);
+}
+
+.header .navtop .logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--secondary-color);
+    position: relative;
+}
+
+.header .navtop .logo::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.header .navtop .logo:hover::after {
+    transform: scaleX(1);
+}
+
+/* Container styles */
+.container {
+    padding-top: 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: 1rem;
+    padding-bottom: 70px;
+}
+
+.selection-section {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.input-field {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--panel-color);
+    color: var(--text-color);
+    min-width: 150px;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(14, 75, 241, 0.1);
+}
+
+.input-field:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Add these styles after the input-field styles */
+.my-data-btn {
+    padding: 0.5rem 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.my-data-btn:hover {
+    opacity: 0.9;
+}
+
+/* Timetable container styles */
+.timetable-container {
+    margin-top: 4.5rem;
+    padding: 1rem;
+}
+
+.image-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timetable-image {
+    width: 100%;
+    height: auto;
+    display: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder-message {
+    text-align: center;
+    color: var(--text-color);
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+/* Navbar styles */
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--panel-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    border-top: 1px solid var(--border-color);
+    z-index: 99999;
+    box-shadow: 0 -2px 10px rgba(14, 75, 241, 0.1);
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--black-light-color);
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    fill: currentColor;
+}
+
+.nav-link span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.nav-link.active {
+    color: var(--secondary-color);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .selection-section {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .timetable-container {
+        padding: 1rem;
+    }
+    
+    .my-data-btn {
+        width: 100%;
+    }
+}
+
+/* More Menu Styles */
+.more-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--panel-color);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 999999;
+}
+
+.more-menu.active {
+    right: 0;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-header h3 {
+    color: var(--text-color);
+    margin: 0;
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-items {
+    padding: 1rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+    fill: currentColor;
+}
+
+/* Dark mode adjustments */
+body.dark .more-menu {
+    background-color: var(--panel-color);
+}
+
+body.dark .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.main-content {
+    padding: 5rem 1rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.selection-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.select-field {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--panel-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    min-width: 150px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.select-field:hover {
+    border-color: var(--secondary-color);
+}
+
+.select-field:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.my-data-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.3s;
+}
+
+.my-data-btn:hover {
+    opacity: 0.9;
+}
+
+.timetable-view {
+    background: var(--panel-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--black-light-color);
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.timetable {
+    width: 100%;
+    height: auto;
+    display: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+}
+
+.timetable[style*="display: block"] {
+    display: block !important;
+}
+
+.timetable-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .selection-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .select-field, .my-data-btn {
+        width: 100%;
+    }
+}
