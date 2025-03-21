@@ -2,7 +2,6 @@
 const profileAvatar = document.getElementById('profileAvatar');
 const editAvatarBtn = document.querySelector('.edit-avatar-btn');
 const themeToggle = document.getElementById('theme-toggle');
-const logoutBtn = document.getElementById('logoutBtn');
 const settingItems = document.querySelectorAll('.setting-item');
 
 // Initialize Profile
@@ -57,15 +56,33 @@ function setupEventListeners() {
     const themeSwitch = document.getElementById('theme-switch');
     
     if (themeToggle && themeSwitch) {
-        // Set initial state
-        themeSwitch.checked = document.body.classList.contains('dark');
+        // Set initial state based on localStorage
+        const isDark = localStorage.getItem('theme') === 'dark';
+        document.body.classList.toggle('dark', isDark);
+        themeSwitch.checked = isDark;
         
         themeToggle.addEventListener('click', () => {
-            themeSwitch.checked = !themeSwitch.checked;
-            toggleTheme();
+            const isDark = !document.body.classList.contains('dark');
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeSwitch.checked = isDark;
         });
-        
-        themeSwitch.addEventListener('change', toggleTheme);
+
+        // Additional switch handler
+        themeSwitch.addEventListener('change', () => {
+            const isDark = themeSwitch.checked;
+            document.body.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+    // Logout handler
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('userData');
+            window.location.href = 'onboarding.html';
+        });
     }
 
     // Profile editing
@@ -81,15 +98,6 @@ function setupEventListeners() {
     const closeModalBtn = document.querySelector('.close-modal');
     if (closeModalBtn) {
         closeModalBtn.addEventListener('click', closeEditModal);
-    }
-
-    // Logout handler
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('userData');
-            window.location.href = 'onboarding.html';
-        });
     }
 
     // Avatar selection in modal
@@ -131,26 +139,6 @@ function setupEventListeners() {
     });
 }
 
-// Initialize theme
-function initializeTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark');
-    }
-}
-
-// Toggle theme
-function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.classList.contains('dark') ? 'light' : 'dark';
-    
-    // Toggle the class
-    body.classList.toggle('dark');
-    
-    // Save the theme preference to localStorage
-    localStorage.setItem('theme', currentTheme);
-}
-
 // Page Transitions
 function setupPageTransitions() {
     const transitionOverlay = document.querySelector('.page-transition-overlay');
@@ -170,73 +158,66 @@ function setupPageTransitions() {
 // Open edit modal
 function openEditModal() {
     const modal = document.getElementById('editProfileModal');
-    if (!modal) {
-        console.error('Modal element not found');
-        return;
-    }
-    
     const userData = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) {
-        console.error('No user data found');
-        return;
-    }
     
-    // Populate form with current data
+    // Populate current data
     document.getElementById('editName').value = userData.name || '';
     
-    // Set selected grade
-    const gradeButtons = document.querySelectorAll('#gradeOptions .option-button');
-    gradeButtons.forEach(button => {
-        if (button.dataset.value === userData.grade) {
-            button.classList.add('selected');
-        }
-    });
-    
-    // Set selected class
-    const classButtons = document.querySelectorAll('#classOptions .option-button');
-    classButtons.forEach(button => {
-        if (button.dataset.value === userData.class) {
-            button.classList.add('selected');
-        }
-    });
-    
-    // Show current avatar selection
+    // Select current avatar
     document.querySelectorAll('.avatar-option').forEach(option => {
-        option.classList.remove('selected');
-        if (option.dataset.emoji === userData.emoji) {
+        if(option.dataset.emoji === userData.emoji) {
             option.classList.add('selected');
         }
     });
     
-    modal.classList.add('active');
-    document.body.classList.add('modal-open');
+    // Select current grade
+    document.querySelectorAll('#gradeOptions .option-button').forEach(button => {
+        if(button.dataset.value === userData.grade) {
+            button.classList.add('selected');
+        }
+    });
+    
+    // Select current class
+    document.querySelectorAll('#classOptions .option-button').forEach(button => {
+        if(button.dataset.value === userData.class?.slice(-1)) {
+            button.classList.add('selected');
+        }
+    });
+    
+    modal.style.display = 'flex';
 }
 
 // Close edit modal
 function closeEditModal() {
     const modal = document.getElementById('editProfileModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
+    modal.style.display = 'none';
 }
 
-// Add save profile changes function
+// Add click handlers for option buttons
+function setupOptionButtons() {
+    document.querySelectorAll('.option-button').forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove selected class from siblings
+            button.parentElement.querySelectorAll('.option-button')
+                .forEach(btn => btn.classList.remove('selected'));
+            // Add selected class to clicked button
+            button.classList.add('selected');
+        });
+    });
+}
+
 function saveProfileChanges() {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const newName = document.getElementById('editName').value;
-    const newGrade = document.querySelector('#gradeOptions .option-button.selected')?.dataset.value;
-    const newClass = document.querySelector('#classOptions .option-button.selected')?.dataset.value;
-    const newEmoji = document.querySelector('.avatar-option.selected')?.dataset.emoji;
-
+    const grade = document.querySelector('#gradeOptions .option-button.selected')?.dataset.value;
+    const classLetter = document.querySelector('#classOptions .option-button.selected')?.dataset.value;
+    
     const updatedData = {
         ...userData,
-        name: newName,
-        grade: newGrade,
-        class: newClass,
-        emoji: newEmoji || userData.emoji
+        name: document.getElementById('editName').value,
+        class: grade + classLetter,
+        emoji: document.querySelector('.avatar-option.selected')?.dataset.emoji || '😊'
     };
-
+    
     localStorage.setItem('userData', JSON.stringify(updatedData));
     loadUserData(); // Refresh the display
     closeEditModal();
@@ -280,7 +261,28 @@ function showError(message) {
     errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
 }
 
+// Add this function to initialize theme
+function initializeTheme() {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    const themeSwitch = document.getElementById('theme-switch');
+    if (themeSwitch) {
+        themeSwitch.checked = isDark;
+    }
+}
+
 // Call setup when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
     initializeProfile();
+    
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Set initial state based on current theme
+    themeToggle.checked = document.body.classList.contains('dark');
+    
+    // Add event listener for theme toggle
+    themeToggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+    });
 });

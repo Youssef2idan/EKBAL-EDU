@@ -123,4 +123,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize with all timetables hidden
     hideAllTimetables();
     showPlaceholder();
+
+    // Add this function to your existing timetable.js
+    function setupDownloadButton() {
+        const downloadBtn = document.getElementById('downloadTimetable');
+        downloadBtn.addEventListener('click', () => {
+            const timetableElement = document.querySelector('.timetable');
+            if (!timetableElement) {
+                alert('Please select a class first');
+                return;
+            }
+
+            // Create a styled version of the timetable for download
+            const style = `
+                <style>
+                    table { border-collapse: collapse; width: 100%; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                    th { background-color: #0E4BF1; color: white; }
+                    .timetable { margin: 20px; }
+                    h1 { color: #0E4BF1; text-align: center; }
+                </style>
+            `;
+
+            const title = `<h1>Class Timetable - ${gradeSelect.value.toUpperCase()} ${classSelect.value.toUpperCase()}</h1>`;
+            const content = `<html><head>${style}</head><body>${title}${timetableElement.outerHTML}</body></html>`;
+
+            // Create the download
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `timetable_${gradeSelect.value}_${classSelect.value}.html`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        });
+    }
+
+    // Add this to your DOMContentLoaded event listener
+    setupDownloadButton();
 });

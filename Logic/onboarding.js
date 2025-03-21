@@ -44,6 +44,7 @@ async function nextStep(currentStepId, nextStepId) {
     currentStep.classList.remove('active');
     nextStep.classList.add('active');
     updateDobyMessage(nextStepId);
+    updateProgress(nextStepId);
 }
 
 function validateStep(stepId) {
@@ -65,17 +66,20 @@ function validateStep(stepId) {
 function updateDobyMessage(stepId) {
     const dobyMessage = document.querySelector('.doby-message p');
     switch(stepId) {
+        case 'nameStep':
+            dobyMessage.textContent = "Hi! I'm Doby, your personal assistant. Let's get your account set up! What's your name?";
+            break;
         case 'avatarStep':
-            dobyMessage.textContent = "Let's choose a cool profile picture for you!";
+            dobyMessage.textContent = "Great! Now, let's pick a cool avatar for you! Choose one that matches your style!";
             break;
         case 'codeStep':
-            dobyMessage.textContent = "Now, I'll need your student ID to set up your account.";
+            dobyMessage.textContent = "Perfect! I'll need your student ID to set up your account properly.";
             break;
         case 'gradeStep':
-            dobyMessage.textContent = "Almost done! Just need to know your grade and class.";
+            dobyMessage.textContent = "Almost done! Just need to know which grade and class you're in.";
             break;
         case 'welcomeStep':
-            dobyMessage.textContent = "Awesome! Everything is ready for you!";
+            dobyMessage.textContent = "Awesome! Everything is ready for you. Welcome to EKBAL EDU!";
             break;
     }
 }
@@ -163,4 +167,39 @@ function getErrorMessage(stepId) {
         default:
             return 'Please complete this step';
     }
-} 
+}
+
+// Add these new functions
+function nextSlide(currentId, nextId) {
+    document.getElementById(currentId).classList.remove('active');
+    document.getElementById(nextId).classList.add('active');
+    
+    // Update progress dots
+    document.querySelector(`[data-slide="${currentId}"]`).classList.remove('active');
+    document.querySelector(`[data-slide="${nextId}"]`).classList.add('active');
+}
+
+function startOnboarding() {
+    // Hide the intro slides and show the onboarding form
+    document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+    document.getElementById('onboardingForm').classList.add('active');
+    document.querySelector('.progress-dots').style.display = 'none';
+}
+
+function updateProgress(stepId) {
+    const totalSteps = 4;
+    let currentStep;
+    
+    switch(stepId) {
+        case 'nameStep': currentStep = 1; break;
+        case 'avatarStep': currentStep = 2; break;
+        case 'codeStep': currentStep = 3; break;
+        case 'gradeStep': currentStep = 4; break;
+        default: currentStep = 1;
+    }
+    
+    const progress = (currentStep / totalSteps) * 100;
+    document.querySelectorAll('.progress').forEach(bar => {
+        bar.style.width = `${progress}%`;
+    });
+}
