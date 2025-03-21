@@ -6,72 +6,255 @@
     <title>Welcome to EKBAL EDU</title>
     <link rel="stylesheet" href="/Style/onboarding.css">
     <link rel="stylesheet" href="/Style/Color/mode.css">
+    <link rel="stylesheet" href="/Style/shared/safe-areas.css">
 </head>
 <body>
     <div class="onboarding-container">
-        <div class="doby-container">
-            <div class="doby-avatar">🤖</div>
-            <div class="doby-message">
-                <p>Hi! I'm your study assistant !</p>
-                <p>and my name is Doby !</p>
-                <p>I need to know more about you !.</p>
+        <!-- Onboarding Slides -->
+        <div class="slides-container">
+            <!-- Slide 1 -->
+            <div class="slide active" id="slide1">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/student.png" alt="Anywhere illustration">
+                    </div>
+                    <h2>Welcome Back Our Dear Student</h2>
+                    <p>We are happy to have you here, Now Let's Take a trip in this app to know more about it !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide1', 'slide2')">Continue</button>
             </div>
+
+            <!-- Slide 2 -->
+            <div class="slide" id="slide2">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/A+.png" alt="Ad free illustration">
+                    </div>
+                    <h2>From here you can get your Exam Results</h2>
+                    <p>We will help you to get your Exam Results, after each exam you will be able to see your results here !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide2', 'slide3')">Continue</button>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide" id="slide3">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/schedule.png" alt="Schedule illustration">
+                    </div>
+                    <h2>Also you can see your daily schedule</h2>
+                    <p>You can see your schedule here, and you can also set a reminder for your lessons !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide3', 'slide4')">Continue</button>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide" id="slide4">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/groups.png" alt="Homework illustration">
+                    </div>
+                    <h2>You can join study groups</h2>
+                    <p>You can join study groups to ask questions and help each other !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide4', 'slide5')">Continue</button>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide" id="slide5">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/video.png" alt="Attendance illustration">
+                    </div>
+                    <h2>You can watch videos about your lessons</h2>
+                    <p>You can watch videos about your lessons to help you understand better !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide5', 'slide6')">Continue</button>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide" id="slide6">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/pdf.png" alt="Doby illustration">
+                    </div>
+                    <h2>And also you can download your worksheets</h2>
+                    <p>You can download your worksheets to help you understand better !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide6', 'slide7')">Continue</button>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="slide" id="slide7">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/quiz.png" alt="Quiz illustration">
+                    </div>
+                    <h2>Take Quizzes to Test Your Knowledge</h2>
+                    <p>Challenge yourself with interactive quizzes and track your progress in different subjects !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide7', 'slide8')">Continue</button>
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="slide" id="slide8">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/Doby.png" alt="Get Started illustration">
+                    </div>
+                    <h2>And also you can ask Doby for help</h2>
+                    <p>Doby is here to help you with your studies and keep you organized throughout the school year !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide8', 'slide9')">Continue</button>
+            </div>
+
+            <!-- Slide 9 -->
+            <div class="slide" id="slide9">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/challengs.png" alt="Notification illustration">
+                    </div>
+                    <h2>You can also join challenges</h2>
+                    <p>join challenge rooms and try to defeat your enemy !!</p>
+                </div>
+                <button class="continue-btn" onclick="nextSlide('slide9', 'slide10')">Continue</button>
+            </div>
+
+            <!-- Slide 10 -->
+            <div class="slide" id="slide10">
+                <div class="slide-content">
+                    <div class="illustration">
+                        <img src="/Data/images/OnBoarding/education.png" alt="Ready illustration">
+                    </div>
+                    <h2>Ready to Start Your Journey?</h2>
+                    <p>Let's set up your account and begin your learning adventure with EKBAL EDU!</p>
+                </div>
+                <button class="continue-btn" onclick="startOnboarding()">Get Started</button>
+            </div>
+
+            <!-- Onboarding Form (Initially Hidden) -->
+            <div class="slide" id="onboardingForm">
+                <div class="onboarding-form-container">
+                    <!-- Doby Section -->
+                    <div class="doby-section">
+                        <div class="doby-avatar">
+                            <img src="/Data/images/OnBoarding/Doby.png" alt="Doby">
+                        </div>
+                        <div class="doby-message">
+                            <p>Hi! I'm Doby, your personal assistant. Let's get your account set up! What's your name?</p>
+                        </div>
+                    </div>
+
+                    <!-- Form Steps -->
+                    <div class="form-steps">
+                        <!-- Step 1: Name -->
+                        <div class="step active" id="nameStep">
+                            <div class="input-group">
+                                <input type="text" id="userName" placeholder="Enter your name" required>
+                                <div class="progress-bar">
+                                    <div class="progress" id="progressBar"></div>
+                                </div>
+                                <button class="continue-btn" onclick="nextStep('nameStep', 'avatarStep')">Continue</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Avatar -->
+                        <div class="step" id="avatarStep">
+                            <div class="avatar-grid">
+                                <div class="avatar-option" data-emoji="👦">👦</div>
+                                <div class="avatar-option" data-emoji="👧">👧</div>
+                                <div class="avatar-option" data-emoji="👨">👨</div>
+                                <div class="avatar-option" data-emoji="👩">👩</div>
+                                <div class="avatar-option" data-emoji="🧑">🧑</div>
+                                <div class="avatar-option" data-emoji="🤖">🤖</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" id="progressBar"></div>
+                            </div>
+                            <button class="continue-btn" onclick="nextStep('avatarStep', 'codeStep')">Continue</button>
+                        </div>
+
+                        <!-- Step 3: Student ID -->
+                        <div class="step" id="codeStep">
+                            <div class="input-group">
+                                <input type="text" id="studentCode" placeholder="Enter your student ID" required>
+                                <div class="progress-bar">
+                                    <div class="progress" id="progressBar"></div>
+                                </div>
+                                <button class="continue-btn" onclick="nextStep('codeStep', 'gradeStep')">Continue</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Grade & Class -->
+                        <div class="step" id="gradeStep">
+                            <div class="grade-class-container">
+                                <select id="grade" required>
+                                    <option value="" disabled selected>Select your grade</option>
+                                    <option value="middle1">Middle 1</option>
+                                    <option value="middle2">Middle 2</option>
+                                </select>
+                                <select id="class" required>
+                                    <option value="" disabled selected>Select your class</option>
+                                    <option value="a">Class A</option>
+                                    <option value="b">Class B</option>
+                                    <option value="c">Class C</option>
+                                    <option value="d">Class D</option>
+                                </select>
+                                <button class="continue-btn" onclick="completeOnboarding()">
+                                    <span>Finish</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Welcome Step -->
+                        <div class="step" id="welcomeStep">
+                            <div class="welcome-content">
+                                <div class="success-animation">
+                                    <svg class="checkmark" viewBox="0 0 52 52">
+                                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                    </svg>
+                                </div>
+                                <h2>Welcome, <span id="welcomeName"></span>!</h2>
+                                <p>Your account has been created successfully.</p>
+                                <div class="loading-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="progress-section">
+                        <div class="progress-labels">
+                            <span class="progress-step active">Name</span>
+                            <span class="progress-step">Avatar</span>
+                            <span class="progress-step">ID</span>
+                            <span class="progress-step">Grade</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" id="progressBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="steps-container">
-            <!-- Step 1: Name -->
-            <div class="step active" id="nameStep">
-                <h2>What's your name?</h2>
-                <input type="text" id="userName" placeholder="Enter your name" required>
-                <button class="next-btn" onclick="nextStep('nameStep', 'avatarStep')">Next</button>
-            </div>
-
-            <!-- Step 2: Avatar -->
-            <div class="step" id="avatarStep">
-                <h2>Choose your profile picture</h2>
-                <div class="avatar-options">
-                    <div class="avatar-option" data-emoji="😊">😊</div>
-                    <div class="avatar-option" data-emoji="😎">😎</div>
-                    <div class="avatar-option" data-emoji="😜">😜</div>
-                    <div class="avatar-option" data-emoji="😉">😉</div>
-                </div>
-                <button class="next-btn" onclick="nextStep('avatarStep', 'codeStep')">Next</button>
-            </div>
-
-            <!-- Step 3: Student Code -->
-            <div class="step" id="codeStep">
-                <h2>What's your student ID?</h2>
-                <input type="text" id="studentCode" placeholder="Enter your student ID" required>
-                <button class="next-btn" onclick="nextStep('codeStep', 'gradeStep')">Next</button>
-            </div>
-
-            <!-- Step 4: Grade and Class -->
-            <div class="step" id="gradeStep">
-                <h2>Select your grade and class</h2>
-                <select id="grade" required>
-                    <option value="">Select Grade</option>
-                    <option value="middle-one">Middle One</option>
-                    <option value="middle-two">Middle Two</option>
-                    <option value="middle-three">Middle Three</option>
-                </select>
-                <select id="class" required>
-                    <option value="">Select Class</option>
-                    <option value="a">A</option>
-                    <option value="b">B</option>
-                    <option value="c">C</option>
-                    <option value="d">D</option>
-                </select>
-                <button class="next-btn" onclick="completeOnboarding()">Finish</button>
-            </div>
-
-            <!-- Welcome Screen -->
-            <div class="step" id="welcomeStep">
-                <div class="welcome-message">
-                    <h1>Welcome, <span id="welcomeName"></span>! 🎉</h1>
-                    <p>I'm getting everything ready for you...</p>
-                    <div class="loading-spinner"></div>
-                </div>
-            </div>
+        <!-- Progress Dots -->
+        <div class="progress-dots">
+            <span class="dot active" data-slide="slide1"></span>
+            <span class="dot" data-slide="slide2"></span>
+            <span class="dot" data-slide="slide3"></span>
+            <span class="dot" data-slide="slide4"></span>
+            <span class="dot" data-slide="slide5"></span>
+            <span class="dot" data-slide="slide6"></span>
+            <span class="dot" data-slide="slide7"></span>
+            <span class="dot" data-slide="slide8"></span>
+            <span class="dot" data-slide="slide9"></span>
+            <span class="dot" data-slide="slide10"></span>
         </div>
     </div>
 

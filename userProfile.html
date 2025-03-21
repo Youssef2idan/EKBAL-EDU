@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/Style/userProfile.css">
     <link rel="stylesheet" href="/Style/Color/mode.css">
     <link rel="stylesheet" href="/Style/navigation/nav.css">
+    <link rel="stylesheet" href="/Style/shared/safe-areas.css">
 </head>
 <body>
     <div class="page-transition-overlay"></div>
@@ -143,59 +144,24 @@
                     </div>
                 </section>
 
-                <button class="logout-button" id="logoutBtn">
-                    <span class="logout-icon">🚪</span>
-                    Logout
-                </button>
+                <!-- Add this right after the Support Section, before closing settings-sections div -->
+                <section class="settings-section">
+                    <h3>Account</h3>
+                    <div class="settings-list">
+                        <button id="logoutBtn" class="setting-item logout-item">
+                            <div class="setting-icon">🚪</div>
+                            <div class="setting-content">
+                                <span>Logout</span>
+                                <p>Sign out of your account</p>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+
             </div>
 
             <!-- Add this after the settings-sections div -->
-            <div id="editProfileModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <h2>Edit Profile</h2>
-                    <div id="errorContainer"></div>
-                    <form id="editProfileForm">
-                        <div class="form-group">
-                            <label for="editName">Name</label>
-                            <input type="text" id="editName" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Grade</label>
-                            <div class="selection-grid" id="gradeOptions">
-                                <button type="button" class="option-button" data-value="1">Grade 1</button>
-                                <button type="button" class="option-button" data-value="2">Grade 2</button>
-                                <button type="button" class="option-button" data-value="3">Grade 3</button>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Class</label>
-                            <div class="selection-grid" id="classOptions">
-                                <button type="button" class="option-button" data-value="A">Class A</button>
-                                <button type="button" class="option-button" data-value="B">Class B</button>
-                                <button type="button" class="option-button" data-value="C">Class C</button>
-                            </div>
-                        </div>
-
-                        <div class="avatar-selection">
-                            <label>Choose Avatar</label>
-                            <div class="avatar-options">
-                                <div class="avatar-option" data-emoji="😊">😊</div>
-                                <div class="avatar-option" data-emoji="😎">😎</div>
-                                <div class="avatar-option" data-emoji="😜">😜</div>
-                                <div class="avatar-option" data-emoji="😉">😉</div>
-                            </div>
-                        </div>
-                        
-                        <div class="modal-buttons">
-                            <button type="submit" class="save-btn">Save Changes</button>
-                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            
         </div>
     </div>
 
@@ -232,5 +198,52 @@
     <script src="/Logic/shared/auth.js"></script>
     <script src="/Logic/shared/transitions.js"></script>
     <script src="/Logic/userProfile.js"></script>
+
+    <!-- Add this before the closing body tag -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Avatar</label>
+                    <div class="avatar-options">
+                        <button type="button" class="avatar-option" data-emoji="😊">😊</button>
+                        <button type="button" class="avatar-option" data-emoji="😇">😇</button>
+                        <button type="button" class="avatar-option" data-emoji="😜">😜</button>
+                        <button type="button" class="avatar-option" data-emoji="😉">😉</button>
+                        <button type="button" class="avatar-option" data-emoji="😎">😎</button>
+                        <button type="button" class="avatar-option" data-emoji="🎓">🎓</button>
+                        <button type="button" class="avatar-option" data-emoji="👨‍🎓">👨‍🎓</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Grade</label>
+                    <div class="selection-grid" id="gradeOptions">
+                        <button type="button" class="option-button" data-value="middle1">Middle 1</button>
+                        <button type="button" class="option-button" data-value="middle2">Middle 2</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Class</label>
+                    <div class="selection-grid" id="classOptions">
+                        <button type="button" class="option-button" data-value="a">Class A</button>
+                        <button type="button" class="option-button" data-value="b">Class B</button>
+                        <button type="button" class="option-button" data-value="c">Class C</button>
+                        <button type="button" class="option-button" data-value="d">Class D</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html> 
