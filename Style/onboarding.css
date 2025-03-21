@@ -28,28 +28,59 @@ body.dark .splash {
 
 .doby-container {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
 }
 
 .doby-avatar {
-    font-size: 4rem;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
     animation: bounce 2s infinite;
+}
+
+.doby-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .doby-message {
     background: var(--panel-color);
-    padding: 1rem;
-    border-radius: 1rem;
+    padding: 1.2rem;
+    border-radius: 16px;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    border: 2px solid var(--border-color);
+}
+
+.doby-message p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
 }
 
 .doby-message::before {
     content: '';
     position: absolute;
-    left: -10px;
-    top: 50%;
+    left: -12px;
+    top: 20px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent var(--border-color) transparent transparent;
+}
+
+.doby-message::after {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 20px;
     border-width: 10px;
     border-style: solid;
     border-color: transparent var(--panel-color) transparent transparent;
@@ -58,7 +89,11 @@ body.dark .splash {
 .steps-container {
     width: 100%;
     max-width: 400px;
-    padding: 0 1rem;
+    background: var(--panel-color);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 }
 
 .step {
@@ -67,12 +102,18 @@ body.dark .splash {
 }
 
 .step.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    animation: fadeIn 0.5s ease;
 }
 
 .step h2 {
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     text-align: center;
+    color: var(--text-color);
 }
 
 input, select {
@@ -109,21 +150,27 @@ input, select {
     transform: scale(1.1);
 }
 
-.next-btn {
+.next-btn, .finish-btn {
     width: 100%;
-    padding: 1rem;
-    background: var(--secondary-color);
-    color: white;
+    padding: 1.2rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 16px;
+    background-color: var(--secondary-color);
+    color: white;
     font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
-.next-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.next-btn:hover, .finish-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 75, 241, 0.2);
 }
 
 .welcome-message {
@@ -168,4 +215,463 @@ input, select {
         font-size: 0.9rem;
         padding: 0.75rem;
     }
-} 
+}
+
+/* Add these new styles */
+.slides-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slide {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.slide.active {
+    display: flex;
+}
+
+.slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.illustration {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+.illustration img {
+    width: 100%;
+    height: auto;
+}
+
+.continue-btn, .submit-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 3rem;
+}
+
+.registration-form {
+    display: none;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.registration-form.active {
+    display: block;
+    animation: slideUp 0.5s ease;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1.2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 4px rgba(14, 75, 241, 0.1);
+    outline: none;
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.avatar-option {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: var(--background-color);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-option:hover {
+    transform: scale(1.05);
+    border-color: var(--secondary-color);
+}
+
+.avatar-option.selected {
+    border-color: var(--secondary-color);
+    background-color: rgba(14, 75, 241, 0.1);
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Add these new styles for the onboarding form */
+.onboarding-form-container {
+    background: var(--panel-color);
+    border-radius: 24px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.doby-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.doby-avatar {
+    width: 120px;
+    height: 120px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.doby-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.doby-message {
+    background: var(--background-color);
+    padding: 1.2rem;
+    border-radius: 16px;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.doby-message::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent var(--background-color) transparent;
+}
+
+.progress-section {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.progress-step {
+    font-size: 0.85rem;
+    color: var(--black-light-color);
+    position: relative;
+}
+
+.progress-step.active {
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: var(--secondary-color);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.next-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: var(--secondary-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.grade-class-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.grade-class-container select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.success-animation {
+    margin-bottom: 2rem;
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.checkmark-circle {
+    stroke: var(--secondary-color);
+    stroke-width: 2;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    stroke: var(--secondary-color);
+    stroke-width: 2;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    animation: dots 1s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dots {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.5); opacity: 0.5; }
+}
+
+/* Update the input group and progress bar styles */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(14, 75, 241, 0.1);
+}
+
+/* Update progress bar styles */
+.progress-bar {
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.progress {
+    height: 100%;
+    background: var(--secondary-color);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Remove progress labels */
+.progress-section {
+    display: none;
+}
+
+/* Update continue button styles */
+.continue-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: var(--secondary-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.continue-btn:hover {
+    background: #0d43d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 75, 241, 0.2);
+}
+
+.continue-btn:active {
+    transform: translateY(0);
+}
+
+/* Update avatar grid container */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Update grade-class container */
+.grade-class-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.grade-class-container select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.grade-class-container select:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(14, 75, 241, 0.1);
+}
+
+/* Remove the finish-btn class since we're using continue-btn */
+.grade-class-container .continue-btn {
+    margin-top: 0.5rem;
+}

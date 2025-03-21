@@ -382,3 +382,34 @@ body.dark .menu-item:hover {
         width: 100%;
     }
 }
+
+/* Add these styles to your existing timetable.css */
+.timetable-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.download-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}

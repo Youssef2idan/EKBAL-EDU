@@ -178,56 +178,116 @@ body{
 
 /* Theme Toggle */
 .theme-toggle {
-    width: 50px;
-    height: 26px;
-    border-radius: 13px;
-    background-color: var(--black-light-color);
-    position: relative;
-    cursor: pointer;
-    border: none;
-    padding: 0;
-}
-
-.toggle-track {
-    width: 22px;
-    height: 22px;
-    background-color: white;
-    border-radius: 50%;
     position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: transform 0.3s ease;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
 }
 
-body.dark .toggle-track {
-    transform: translateX(24px);
+.theme-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.theme-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.theme-toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--secondary-color);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.theme-toggle-switch input:checked + label {
+    background-color: var(--border-color);
+}
+
+.theme-toggle-switch input:checked + label:before {
+    transform: translateX(30px);
+    background-color: var(--secondary-color);
 }
 
 /* Logout Button */
-.logout-button {
+.logout-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     width: 100%;
     padding: 1rem;
-    margin-top: 2rem;
     background-color: var(--panel-color);
-    border: 1px solid var(--error-color);
+    border: none;
     border-radius: 12px;
-    color: var(--error-color);
-    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.logout-item .setting-icon {
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    cursor: pointer;
+    background-color: var(--error-light-color);
+    border-radius: 10px;
+    color: var(--error-color);
+    font-size: 1.5rem;
     transition: all 0.3s ease;
 }
 
-.logout-button:hover {
+.logout-item .setting-content {
+    flex: 1;
+}
+
+.logout-item .setting-content span {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--error-color);
+    transition: all 0.3s ease;
+}
+
+.logout-item .setting-content p {
+    font-size: 0.85rem;
+    color: var(--text-light-color);
+    transition: all 0.3s ease;
+}
+
+.logout-item:hover {
     background-color: var(--error-color);
+}
+
+.logout-item:hover .setting-icon {
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
 
-.logout-icon {
-    font-size: 1.2rem;
+.logout-item:hover .setting-content span,
+.logout-item:hover .setting-content p {
+    color: white;
 }
 
 /* Fade Animation */
@@ -347,138 +407,6 @@ body.dark .toggle-track {
     transform: scale(0.95);
 }
 
-/* Add these styles to your existing userProfile.css */
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    justify-content: flex-start;
-    align-items: center;
-    z-index: 1000;
-    padding-top: 80px;
-    overflow-y: auto;
-}
-
-.modal.active {
-    display: flex;
-    animation: modalFadeIn 0.3s ease forwards;
-}
-
-.modal-content {
-    background-color: var(--panel-color);
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 90%;
-    width: 400px;
-    position: relative;
-    margin: 20px auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.close-modal {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-
-.modal h2 {
-    color: var(--secondary-color);
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-
-.avatar-selection {
-    margin-bottom: 1.5rem;
-}
-
-.avatar-selection h4 {
-    color: var(--text-color);
-    margin-bottom: 1rem;
-    font-size: 1rem;
-}
-
-.avatar-options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.avatar-option {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    background-color: var(--sec-panel-color);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.avatar-option.selected {
-    background-color: var(--secondary-color);
-    transform: scale(1.1);
-}
-
-.modal input,
-.modal select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--sec-panel-color);
-    color: var(--text-color);
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.modal-buttons button {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.save-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.save-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-.cancel-btn {
-    background-color: var(--sec-panel-color);
-    color: var(--text-color);
-}
-
-/* Add these new styles */
-body.modal-open {
-    overflow: initial;
-}
 
 /* Dark mode adjustments */
 body.dark .modal-content {
@@ -491,52 +419,6 @@ body.dark select {
     background-color: var(--panel-color);
     color: var(--text-color);
     border-color: var(--border-color);
-}
-
-/* Theme toggle switch styles */
-.theme-toggle-switch {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    margin-left: auto;
-}
-
-.theme-toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.theme-toggle-switch label {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-}
-
-.theme-toggle-switch label:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-.theme-toggle-switch input:checked + label {
-    background-color: var(--secondary-color);
-}
-
-.theme-toggle-switch input:checked + label:before {
-    transform: translateX(30px);
 }
 
 /* Modal styles */
@@ -614,9 +496,9 @@ body.dark select {
 }
 
 .option-button.selected {
-    background: var(--primary-color);
+    background: var(--secondary-color);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--secondary-color);
 }
 
 /* Error Message Styles */
@@ -646,4 +528,67 @@ body.dark select {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Avatar Options */
+.avatar-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.avatar-option {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--panel-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-option.selected {
+    border-color: var(--secondary-color);
+    background: var(--secondary-color);
+}
+
+/* Selection Grid */
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
+}
+
+.option-button {
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--panel-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-button.selected {
+    border-color: var(--secondary-color);
+    background: var(--secondary-color);
+    color: white;
+}
+
+.save-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.save-button:hover {
+    opacity: 0.9;
 }
