@@ -157,7 +157,7 @@ body.dark .splash {
 
 /* Features Section Styles */
 .features-section {
-    padding: 1rem .5rem;
+    padding: 1.5rem 1rem;
     margin: 1rem auto;
     max-width: 1200px;
     width: 100%;
@@ -166,130 +166,118 @@ body.dark .splash {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: .5rem;
+    gap: 0.7rem;
+    padding: 0 0.5rem;
 }
 
 .feature-item {
     background-color: var(--panel-color);
-    padding: 1rem;
-    border-radius: 10px;
+    padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+    border-radius: 16px;
     text-align: center;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 120px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: 130px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--secondary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.feature-item:hover::before {
+    transform: scaleX(1);
 }
 
 .feature-icon {
-    font-size: 1.8rem;
-    margin-bottom: 0.2rem;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+    transform: scale(1.1);
 }
 
 .feature-item h3 {
     color: var(--text-color);
     margin-bottom: 0.2rem;
-    font-size: 1rem;
+    font-size: 0.98rem;
+    font-weight: 600;
 }
 
 .feature-item p {
     color: var(--black-light-color);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    max-width: 95%;
+    margin: 0 auto;
 }
 
-/* Keep the mobile adjustments */
-@media (max-width: 768px) {
-    .features-grid {
-        gap: 0.7rem;
-    }
-    
-    .feature-item {
-        height: 110px;
-        padding: 0.2rem;
-    }
+/* Dark mode adjustments */
+body.dark .feature-item {
+    background: var(--panel-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* More Menu Styles */
-.more-menu {
-    position: fixed;
-    top: 0;
-    right: -300px;
-    width: 300px;
-    height: 100vh;
-    background-color: var(--panel-color);
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    transition: right 0.3s ease;
-    z-index: 999999;
-}
-
-.more-menu.active {
-    right: 0;
-}
-
-.menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.menu-header h3 {
-    color: var(--text-color);
-    margin: 0;
-}
-
-.close-menu {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-}
-
-.menu-items {
-    padding: 1rem;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    color: var(--text-color);
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    margin-bottom: 0.5rem;
-}
-
-.menu-item:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.menu-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 1rem;
-    fill: currentColor;
+body.dark .feature-item:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Mobile adjustments */
-@media screen and (max-width: 768px) {
-    .menu-items {
-        padding-bottom: 80px; /* Add padding to prevent navbar overlap */
+@media (max-width: 768px) {
+    .features-section {
+        padding: 0.7rem 0.3rem;
+    }
+    .features-grid {
+        gap: 0.5rem;
+        padding: 0 0.1rem;
+    }
+    .feature-item {
+        height: 90px;
+        padding: 0.5rem 0.3rem 0.4rem 0.3rem;
+        border-radius: 12px;
+    }
+    .feature-icon {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 0.2rem;
+    }
+    .feature-item h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.15rem;
+    }
+    .feature-item p {
+        font-size: 0.75rem;
     }
 }
 
-/* Add these styles for the SVG icon */
+/* Remove the old SVG icon styles */
 .feature-svg-icon {
-    width: 40px;
-    height: 40px;
-    fill: var(--text-color);
-    margin-bottom: 0.5rem;
+    display: none;
 }
 
 /* Update the page transition styles */
@@ -339,4 +327,76 @@ body.dark .splash {
 
 .fade-out {
     animation: fadeOut 0.3s ease forwards;
+}
+
+/* Hadith Section Styles */
+.hadith-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+}
+
+.hadith-card {
+    background: var(--panel-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.hadith-card:hover {
+    transform: translateY(-3px);
+}
+
+.hadith-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.hadith-text {
+    color: var(--text-color);
+    font-size: 1.3rem;
+    line-height: 2;
+    margin-bottom: 1rem;
+    font-style: normal;
+    font-family: 'Noto Naskh Arabic', serif;
+    direction: rtl;
+}
+
+.hadith-reference {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.hadith-reference::after {
+    content: " ﷺ";
+    font-size: 1.5rem;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+/* Dark mode adjustments */
+body.dark .hadith-card {
+    background: var(--panel-color);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+    .hadith-section {
+        padding: 0 0.5rem;
+    }
+    
+    .hadith-card {
+        padding: 1.2rem;
+    }
+    
+    .hadith-text {
+        font-size: 1.1rem;
+    }
 }

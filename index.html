@@ -7,6 +7,7 @@
     <!-- Style -->
      <link rel="stylesheet" href="/Style/home.css">
      <link rel="stylesheet" href="/Style/Color/mode.css">
+     <link rel="stylesheet" href="/Style/fonts.css">
      <link rel="stylesheet" href="/Style/navigation/nav.css">
      <link rel="stylesheet" href="/Style/shared/transitions.css">
      <link rel="stylesheet" href="/Style/shared/safe-areas.css">
@@ -33,25 +34,34 @@
             <div class="features-section">
                 <div class="features-grid">
                     <div class="feature-item">
-                        <div class="feature-icon">📅</div>
+                        <img src="/Data/images/OnBoarding/schedule.png" alt="Schedule" class="feature-icon">
                         <h3>Schedule</h3>
                         <p>Access your timetable</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">📚</div>
+                        <img src="/Data/images/OnBoarding/education.png" alt="Resources" class="feature-icon">
                         <h3>Resources</h3>
                         <p>Access study materials</p>
                     </div>
                     <div class="feature-item" onclick="handlePageTransition(event, 'doby.html')" style="cursor: pointer;">
-                        <div class="feature-icon">🤖</div>
+                        <img src="/Data/images/OnBoarding/Doby.png" alt="AI Robot" class="feature-icon">
                         <h3>AI Robot</h3>
                         <p>Get instant answers</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">📊</div>
+                        <img src="/Data/images/OnBoarding/A+.png" alt="Marks" class="feature-icon">
                         <h3>Marks</h3>
                         <p>View exam results</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Hadith Section -->
+            <div class="hadith-section">
+                <div class="hadith-card">
+                    <div class="hadith-icon">📖</div>
+                    <p id="hadith-text" class="hadith-text"></p>
+                    <p id="hadith-reference" class="hadith-reference"></p>
                 </div>
             </div>
 
@@ -119,6 +129,7 @@
     <script src="/Logic/Home.js"></script>
     <script src="/Logic/shared/transitions.js"></script>
     <script src="/Logic/shared/auth.js"></script>
+    <script src="/Logic/hadiths.js"></script>
 
 </body>
 </html>

@@ -72,7 +72,13 @@ section h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
+.feature-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-right: 1rem;
+    display: block;
+}
 
 /* Resources Grid */
 .resources-grid {
@@ -93,6 +99,14 @@ section h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.resource-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-right: 1rem;
+    display: block;
+}
+
 /* Help Section */
 .help-section {
     padding: 0 1.5rem;
@@ -110,22 +124,20 @@ section h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.help-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-right: 1rem;
+    display: block;
+}
+
 /* Card Hover Effects */
 .feature-card:hover,
 .resource-card:hover,
 .help-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Icons */
-.feature-icon,
-.resource-icon,
-.help-icon {
-    font-size: 1.8rem;
-    margin-right: 1rem;
-    min-width: 2rem;
-    text-align: center;
 }
 
 /* Card Info */
@@ -165,7 +177,9 @@ section h2 {
     .feature-icon,
     .resource-icon,
     .help-icon {
-        font-size: 1.6rem;
+        width: 28px;
+        height: 28px;
+        margin-right: 0.7rem;
     }
 
     section h2 {

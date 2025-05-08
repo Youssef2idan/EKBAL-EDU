@@ -1,0 +1,45 @@
+{
+    "timetables": [
+      {
+        "class": "1A",
+        "schedule": {
+          "Sunday": ["English", "Arabic", "Art", "P.E"],
+          "Monday": ["English", "Science", "French", "Math", "Arabic"],
+          "Tuesday": ["Science", "D.S", "English", "Arabic", "Math"],
+          "Wednesday": ["Computer", "English", "Arabic", "Math", "N.S"],
+          "Thursday": ["English", "N.S", "Arabic"]
+        }
+      },
+      {
+        "class": "1B",
+        "schedule": {
+          "Sunday": ["English", "Science", "Arabic"],
+          "Monday": ["D.S", "English", "Math", "Arabic", "N.S"],
+          "Tuesday": ["English", "Art", "Computer", "N.S", "Math"],
+          "Wednesday": ["French", "English", "Science", "Arabic", "Math"],
+          "Thursday": ["P.E", "Arabic", "English"]
+        }
+      },
+      {
+        "class": "1C",
+        "schedule": {
+          "Sunday": ["Art", "English", "French", "Arabic"],
+          "Monday": ["Math", "Science", "N.S", "English", "Arabic"],
+          "Tuesday": ["Science", "Math", "Arabic", "English", "D.S"],
+          "Wednesday": ["N.S", "Computer", "P.E", "English", "Arabic"],
+          "Thursday": ["Math", "English", "Arabic"]
+        }
+      },
+      {
+        "class": "1D",
+        "schedule": {
+          "Sunday": ["English", "Math", "Arabic"],
+          "Monday": ["Arabic", "Computer", "N.S", "English", "French"],
+          "Tuesday": ["Art", "English", "Arabic", "P.E", "Math", "Science"],
+          "Wednesday": ["Arabic", "N.S", "English", "D.S", "Math"],
+          "Thursday": ["English", "Science", "Arabic"]
+        }
+      }
+    ]
+  }
+  

@@ -1,0 +1,42 @@
+{
+    "page_1": {
+        "class": "M/2A",
+        "schedule": {
+            "Sunday": ["ENGLISH", "Arabic", "Math"],
+            "Monday": ["F", "Arabic", "ENGLISH", "Computer", "N.S"],
+            "Tuesday": ["P.E", "N.S", "ENGLISH", "Arabic", "Science"],
+            "Wednesday": ["Arabic", "Art", "Math", "ENGLISH", "Science"],
+            "Thursday": ["ENGLISH", "Arabic", "Math"]
+        }
+    },
+    "page_2": {
+        "class": "M/2B",
+        "schedule": {
+            "Sunday": ["N.S", "Arabic", "ENGLISH"],
+            "Monday": ["Computer", "Arabic", "Science", "ENGLISH", "Math"],
+            "Tuesday": ["Arabic", "ENGLISH", "ART", "Science", "N.S"],
+            "Wednesday": ["P.E", "Arabic", "Math", "ENGLISH", "F"],
+            "Thursday": ["Arabic", "ENGLISH", "Math"]
+        }
+    },
+    "page_3": {
+        "class": "M/2C",
+        "schedule": {
+            "Sunday": ["N.S", "ENGLISH", "Arabic"],
+            "Monday": ["P.E", "ENGLISH", "Arabic", "Art", "Science"],
+            "Tuesday": ["F", "Arabic", "Math", "ENGLISH", "Computer"],
+            "Wednesday": ["ENGLISH", "Math", "Science", "N.S", "Arabic"],
+            "Thursday": ["Arabic", "ENGLISH", "Math"]
+        }
+    },
+    "page_4": {
+        "class": "M/2D",
+        "schedule": {
+            "Sunday": ["Arabic", "ENGLISH", "N.S"],
+            "Monday": ["Math", "Arabic", "P.E", "Science", "ENGLISH"],
+            "Tuesday": ["ENGLISH", "Math", "Science", "Computer", "Arabic"],
+            "Wednesday": ["Math", "Arabic", "F", "ENGLISH", "ART"],
+            "Thursday": ["Arabic", "N.S", "ENGLISH"]
+        }
+    }
+}
