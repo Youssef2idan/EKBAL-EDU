@@ -3,6 +3,7 @@ const profileAvatar = document.getElementById('profileAvatar');
 const editAvatarBtn = document.querySelector('.edit-avatar-btn');
 const themeToggle = document.getElementById('theme-toggle');
 const settingItems = document.querySelectorAll('.setting-item');
+const logoutBtn = document.getElementById('logoutBtn');
 
 // Initialize Profile
 function initializeProfile() {
@@ -25,27 +26,28 @@ function initializeProfile() {
 // Load User Data
 function loadUserData() {
     const storedData = localStorage.getItem('userData');
-    
     if (!storedData) {
         window.location.href = 'onboarding.html';
         return;
     }
-
     const userData = JSON.parse(storedData);
-    
-    // Update profile elements
+
+    // Set name
     document.querySelector('.profile-name').textContent = userData.name;
-    document.querySelector('.profile-info').textContent = 
-        `Class ${userData.class.toUpperCase()} • Student ID: ${userData.code}`;
-    
-    // Update avatar emoji
-    const profileAvatar = document.getElementById('profileAvatar');
-    profileAvatar.textContent = userData.emoji || '😊'; // Set emoji or default
-    
-    // Load stats
+
+    // Set profile info and emoji for control member
+    if (userData.isControl) {
+        document.querySelector('.profile-info').textContent = `Control Member • Code: ${userData.code}`;
+        profileAvatar.textContent = userData.emoji || '😈';
+    } else {
+        document.querySelector('.profile-info').textContent = `Class ${userData.class?.toUpperCase() || ''} • Student ID: ${userData.code}`;
+        profileAvatar.textContent = userData.emoji || '😊';
+    }
+
+    // Set stats
     document.querySelectorAll('.stat-value').forEach(stat => {
         const statType = stat.nextElementSibling.textContent.toLowerCase();
-        stat.textContent = userData.stats[statType.toLowerCase()] || '0';
+        stat.textContent = userData.stats?.[statType] || '0';
     });
 }
 
@@ -77,7 +79,6 @@ function setupEventListeners() {
     }
 
     // Logout handler
-    const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('userData');

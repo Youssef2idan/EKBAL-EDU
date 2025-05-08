@@ -242,62 +242,51 @@ body.dark .theme-toggle-switch label:before {
 
 /* Logout Button */
 .logout-item {
+    background: #e74c3c;
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 1.2rem 2rem;
+    margin: 1.5rem 0 0.5rem 0;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    width: 100%;
-    padding: 1rem;
-    background-color: var(--panel-color);
-    border: none;
-    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.08rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    box-shadow: 0 4px 18px rgba(231, 76, 60, 0.13);
+    width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .logout-item .setting-icon {
+    background: rgba(255,255,255,0.18);
+    border-radius: 50%;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--error-light-color);
-    border-radius: 10px;
-    color: var(--error-color);
-    font-size: 1.5rem;
-    transition: all 0.3s ease;
+    font-size: 1.4rem;
+    margin-right: 0.9rem;
+    color: #fff;
 }
 
-.logout-item .setting-content {
-    flex: 1;
-}
-
-.logout-item .setting-content span {
-    display: block;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--error-color);
-    transition: all 0.3s ease;
-}
-
-.logout-item .setting-content p {
-    font-size: 0.85rem;
-    color: var(--text-light-color);
-    transition: all 0.3s ease;
+.logout-item .logout-svg {
+    width: 22px;
+    height: 22px;
+    margin-right: 0.7rem;
+    fill: #fff;
+    flex-shrink: 0;
 }
 
 .logout-item:hover {
-    background-color: var(--error-color);
-}
-
-.logout-item:hover .setting-icon {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.logout-item:hover .setting-content span,
-.logout-item:hover .setting-content p {
-    color: white;
+    background: #c0392b;
+    box-shadow: 0 8px 28px rgba(231, 76, 60, 0.18);
+    transform: scale(1.03);
 }
 
 /* Fade Animation */

@@ -1,0 +1,125 @@
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    background: var(--background-color);
+    min-height: 100vh;
+}
+
+.groups-section {
+    max-width: 700px;
+    margin: 2rem auto 4rem auto;
+    padding: 1.5rem 1rem;
+}
+
+.groups-section h2 {
+    color: var(--text-color);
+    font-size: 1.3rem;
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.groups-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.group-card {
+    background: var(--panel-color);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    padding: 1.1rem 1rem;
+    gap: 1rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    border: 1px solid var(--border-color);
+}
+.group-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.group-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px solid #eee;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.group-info h3 {
+    color: var(--text-color);
+    font-size: 1.08rem;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+.group-info p {
+    color: var(--black-light-color);
+    font-size: 0.92rem;
+    margin-bottom: 0.7rem;
+}
+
+.join-btn {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: #fff;
+}
+.whatsapp-btn:hover {
+    background: #1ebe57;
+    color: #fff;
+}
+
+.telegram-btn {
+    background: #229ED9;
+    color: #fff;
+}
+.telegram-btn:hover {
+    background: #1787b8;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .groups-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .groups-section {
+        padding: 1rem 0.3rem;
+    }
+    .group-card {
+        padding: 1rem 0.7rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .group-icon {
+        width: 38px;
+        height: 38px;
+    }
+    .group-info h3 {
+        font-size: 0.98rem;
+    }
+    .group-info p {
+        font-size: 0.85rem;
+    }
+} 

@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Setup avatar selection
     setupAvatarSelection();
+    
+    // Setup control button
+    setupControlButton();
 });
 
 function setupAvatarSelection() {
@@ -26,10 +29,29 @@ async function nextStep(currentStepId, nextStepId) {
     // Special handling for student code validation
     if (currentStepId === 'codeStep') {
         const studentCode = document.getElementById('studentCode').value;
-        const isValidCode = await validateStudentCode(studentCode);
+        const validationResult = await validateStudentCode(studentCode);
         
-        if (!isValidCode) {
+        if (!validationResult.isValid) {
             showError('Invalid student code. Please check and try again.', 'studentCode');
+            return;
+        }
+        
+        // If it's a control member, save their data and redirect to home page
+        if (validationResult.isControl) {
+            // Set constant user data for control member
+            const userData = {
+                name: 'Hasan Magdy',
+                emoji: '😈',
+                code: 'HR26626',
+                isControl: true,
+                stats: {
+                    attendance: '0%',
+                    average: '0%',
+                    assignments: '0'
+                }
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+            window.location.href = 'index.html';
             return;
         }
     }
@@ -87,12 +109,25 @@ function updateDobyMessage(stepId) {
 // Add this function to validate student code
 async function validateStudentCode(code) {
     try {
-        const response = await fetch('/Data/studentCodes.json');
+        const response = await fetch('/Data/studentData/student-check.json');
         const data = await response.json();
-        return data.validCodes.includes(code);
+        
+        // First check if the code is in the control array
+        const controlCodes = data.find(grade => grade.control)?.control || [];
+        if (controlCodes.includes(code)) {
+            return { isValid: true, isControl: true };
+        }
+        
+        // If not in control, check other grades
+        const isInOtherGrades = data.some(grade => {
+            const gradeCodes = Object.values(grade)[0];
+            return Array.isArray(gradeCodes) && gradeCodes.includes(code);
+        });
+        
+        return { isValid: isInOtherGrades, isControl: false };
     } catch (error) {
         console.error('Error validating student code:', error);
-        return false;
+        return { isValid: false, isControl: false };
     }
 }
 
@@ -201,5 +236,181 @@ function updateProgress(stepId) {
     const progress = (currentStep / totalSteps) * 100;
     document.querySelectorAll('.progress').forEach(bar => {
         bar.style.width = `${progress}%`;
+    });
+}
+
+function setupControlButton() {
+    // Create and add control button
+    const controlButton = document.createElement('button');
+    controlButton.className = 'control-button';
+    controlButton.textContent = 'Control Member';
+    controlButton.style.cssText = `
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    `;
+    
+    // Add hover effect
+    controlButton.addEventListener('mouseover', () => {
+        controlButton.style.backgroundColor = '#34495e';
+        controlButton.style.transform = 'translateY(-2px)';
+    });
+    
+    controlButton.addEventListener('mouseout', () => {
+        controlButton.style.backgroundColor = '#2c3e50';
+        controlButton.style.transform = 'translateY(0)';
+    });
+    
+    // Add button to the first step
+    const firstStep = document.getElementById('nameStep');
+    firstStep.appendChild(controlButton);
+    
+    // Create popup menu
+    const popup = document.createElement('div');
+    popup.className = 'control-popup';
+    popup.style.cssText = `
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 1000;
+        min-width: 300px;
+    `;
+    
+    // Add popup content
+    popup.innerHTML = `
+        <h3 style="margin-bottom: 20px; color: #2c3e50; font-size: 1.5em;">Control Member Access</h3>
+        <input type="text" id="controlCode" placeholder="Enter control code" style="
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        ">
+        <div style="display: flex; gap: 12px;">
+            <button id="submitControlCode" style="
+                padding: 12px 24px;
+                background-color: #2c3e50;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                flex: 1;
+            ">Submit</button>
+            <button id="cancelControl" style="
+                padding: 12px 24px;
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                flex: 1;
+            ">Cancel</button>
+        </div>
+    `;
+    
+    // Add popup to body
+    document.body.appendChild(popup);
+    
+    // Add overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    overlay.style.cssText = `
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 999;
+        backdrop-filter: blur(3px);
+    `;
+    document.body.appendChild(overlay);
+    
+    // Add event listeners
+    controlButton.addEventListener('click', () => {
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+    });
+    
+    document.getElementById('cancelControl').addEventListener('click', () => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+    
+    document.getElementById('submitControlCode').addEventListener('click', async () => {
+        const controlCode = document.getElementById('controlCode').value;
+        const validationResult = await validateStudentCode(controlCode);
+        
+        if (validationResult.isValid && validationResult.isControl) {
+            // Set constant user data for control member
+            const userData = {
+                name: 'Hasan Magdy',
+                emoji: '😈',
+                code: 'HR26626',
+                isControl: true,
+                stats: {
+                    attendance: '0%',
+                    average: '0%',
+                    assignments: '0'
+                }
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+            window.location.href = 'index.html';
+        } else {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'color: #e74c3c; margin-top: 15px; font-size: 0.9em;';
+            errorDiv.textContent = 'Invalid control code. Please try again.';
+            
+            const existingError = popup.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            popup.appendChild(errorDiv);
+        }
+    });
+    
+    // Add hover effects for popup buttons
+    const submitButton = document.getElementById('submitControlCode');
+    const cancelButton = document.getElementById('cancelControl');
+    
+    submitButton.addEventListener('mouseover', () => {
+        submitButton.style.backgroundColor = '#34495e';
+        submitButton.style.transform = 'translateY(-2px)';
+    });
+    
+    submitButton.addEventListener('mouseout', () => {
+        submitButton.style.backgroundColor = '#2c3e50';
+        submitButton.style.transform = 'translateY(0)';
+    });
+    
+    cancelButton.addEventListener('mouseover', () => {
+        cancelButton.style.backgroundColor = '#c0392b';
+        cancelButton.style.transform = 'translateY(-2px)';
+    });
+    
+    cancelButton.addEventListener('mouseout', () => {
+        cancelButton.style.backgroundColor = '#e74c3c';
+        cancelButton.style.transform = 'translateY(0)';
     });
 }
