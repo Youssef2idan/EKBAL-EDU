@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Resources - Ekbal School</title>
+    <link rel="stylesheet" href="Style/resources.css">
+    <link rel="stylesheet" href="Style/global.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Ekbal School</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marks.html">Marks</a>
+                <a href="resources.html" class="active">Resources</a>
+                <a href="userProfile.html">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>School Resources</h1>
+        
+        <!-- Term Selector -->
+        <div class="term-selector">
+            <button class="term-btn active" data-term="one">First Term</button>
+            <button class="term-btn" data-term="two">Second Term</button>
+        </div>
+
+        <!-- Books Container -->
+        <div class="books-container">
+            <!-- Arabic Section -->
+            <section class="subject-section">
+                <h2>Arabic</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>Arabic Language Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('arabic-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('arabic-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>Arabic Language Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('arabic-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('arabic-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Math Section -->
+            <section class="subject-section">
+                <h2>Mathematics</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>Mathematics Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('math-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('math-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>Mathematics Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('math-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('math-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- English Section -->
+            <section class="subject-section">
+                <h2>English</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>English Language Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('english-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('english-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>English Language Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('english-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('english-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Science Section -->
+            <section class="subject-section">
+                <h2>Science</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>Science Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('science-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('science-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>Science Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('science-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('science-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Religion Section -->
+            <section class="subject-section">
+                <h2>Religion</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>Religion Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('religion-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('religion-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>Religion Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('religion-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('religion-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Studies Section -->
+            <section class="subject-section">
+                <h2>Social Studies</h2>
+                <div class="books-grid">
+                    <div class="book-card" data-term="one">
+                        <div class="book-info">
+                            <h3>First Term Book</h3>
+                            <p>Social Studies Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('social-term1')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('social-term1')">Download</button>
+                        </div>
+                    </div>
+                    <div class="book-card" data-term="two">
+                        <div class="book-info">
+                            <h3>Second Term Book</h3>
+                            <p>Social Studies Textbook</p>
+                        </div>
+                        <div class="book-actions">
+                            <button class="preview-btn" onclick="previewBook('social-term2')">Preview</button>
+                            <button class="download-btn" onclick="downloadBook('social-term2')">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- PDF Preview Modal -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <script src="Logic/resources.js"></script>
+</body>
+</html> 

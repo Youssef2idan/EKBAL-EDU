@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             // Find the student data
-            const studentData = data.find(student => student['كود الطالب'] === studentCode);
+            const studentData = data.find(student => student['رقم جاوس'] === studentCode);
             
             if (!studentData) return null;
 

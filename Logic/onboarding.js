@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Check if user has completed onboarding
     if (localStorage.getItem('userData')) {
-        window.location.href = 'userProfile.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -45,9 +45,9 @@ async function nextStep(currentStepId, nextStepId) {
                 code: 'HR26626',
                 isControl: true,
                 stats: {
-                    attendance: '0%',
-                    average: '0%',
-                    assignments: '0'
+                    attendance: '100%',
+                    average: '100%',
+                    assignments: '%%%'
                 }
             };
             localStorage.setItem('userData', JSON.stringify(userData));
