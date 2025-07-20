@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>EKBAL EDU</title>
     <!-- Style -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/Data/images/Logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Data/images/Logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Data/images/Logo/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
      <link rel="stylesheet" href="/Style/home.css">
      <link rel="stylesheet" href="/Style/Color/mode.css">
      <link rel="stylesheet" href="/Style/fonts.css">
@@ -31,27 +35,23 @@
             </div>
             
             <!-- Features Section -->
-            <div class="features-section">
-                <div class="features-grid">
-                    <div class="feature-item" onclick="handlePageTransition(event, 'timeTable.html')" style="cursor: pointer;">
-                        <img src="/Data/images/OnBoarding/schedule.png" alt="Schedule" class="feature-icon">
+            <div class="features-section redesigned-features">
+                <div class="features-grid redesigned-grid">
+                    <div class="feature-item redesigned-feature" onclick="handlePageTransition(event, 'timeTable.html')" style="cursor: pointer;">
+                        <div class="feature-icon-bg"><img src="/Data/images/OnBoarding/schedule.png" alt="Schedule" class="feature-icon"></div>
                         <h3>Schedule</h3>
-                        <p>Access your timetable</p>
                     </div>
-                    <div class="feature-item" onclick="handlePageTransition(event, 'resources.html')" style="cursor: pointer;">
-                        <img src="/Data/images/OnBoarding/education.png" alt="Resources" class="feature-icon">
+                    <div class="feature-item redesigned-feature" onclick="handlePageTransition(event, 'resources.html')" style="cursor: pointer;">
+                        <div class="feature-icon-bg"><img src="/Data/images/OnBoarding/education.png" alt="Resources" class="feature-icon"></div>
                         <h3>Resources</h3>
-                        <p>Access study materials</p>
                     </div>
-                    <div class="feature-item" onclick="handlePageTransition(event, 'doby.html')" style="cursor: pointer;">
-                        <img src="/Data/images/OnBoarding/Doby.png" alt="AI Robot" class="feature-icon">
+                    <div class="feature-item redesigned-feature" onclick="handlePageTransition(event, 'doby.html')" style="cursor: pointer;">
+                        <div class="feature-icon-bg"><img src="/Data/images/OnBoarding/Doby.png" alt="AI Robot" class="feature-icon"></div>
                         <h3>AI Robot</h3>
-                        <p>Get instant answers</p>
                     </div>
-                    <div class="feature-item" onclick="handlePageTransition(event, 'marks.html')" style="cursor: pointer;">
-                        <img src="/Data/images/OnBoarding/A+.png" alt="Marks" class="feature-icon">
+                    <div class="feature-item redesigned-feature" onclick="handlePageTransition(event, 'marks.html')" style="cursor: pointer;">
+                        <div class="feature-icon-bg"><img src="/Data/images/OnBoarding/A+.png" alt="Marks" class="feature-icon"></div>
                         <h3>Marks</h3>
-                        <p>View exam results</p>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@
 body{
     min-height: 100dvh;
     background-color: var(--background-color);
+    user-select: none;
 }
 
 body.dark .splash {
@@ -26,6 +27,8 @@ body.dark .splash {
     align-items: center;
     transition: opacity 0.3s ease;
     opacity: 1;
+    padding-left: .5rem;
+    padding-right: .5rem;
 }
 
 .main-content.exit {

@@ -34,7 +34,7 @@
     bottom: 0;
     width: 100vw;
     max-width: 100vw;
-    height: 70px;
+    height: 2rem; /* was likely larger, now smaller */
     background: var(--panel-color);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -56,7 +56,7 @@
     justify-content: center;
     text-decoration: none;
     color: var(--black-light-color);
-    padding: 0.3rem 0.7rem 0.3rem 0.7rem;
+    padding: 0.3rem 0.7rem;
     border-radius: 10px;
     font-weight: 500;
     font-size: 1rem;
@@ -67,8 +67,8 @@
 }
 
 .nav-link .nav-icon {
-    width: 26px;
-    height: 26px;
+    width: 1.5rem;
+    height: 1.5rem;
     margin-bottom: 0;
     fill: currentColor;
     display: block;
