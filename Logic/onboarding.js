@@ -1,5 +1,6 @@
 // Import Firebase auth functions
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from './shared/firebase.js';
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, db } from './shared/firebase.js';
+import { setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, setting up onboarding...');
@@ -449,6 +450,7 @@ async function completeSignup() {
     const password = document.getElementById('signupPassword').value;
     const name = document.getElementById('userName').value;
     const emoji = document.querySelector('.avatar-option.selected').dataset.emoji;
+    const studentCode = document.getElementById('studentCode').value.trim();
 
     try {
         // Create user account with Firebase
@@ -460,12 +462,20 @@ async function completeSignup() {
             emoji: emoji,
             email: email,
             uid: user.uid,
+            studentCode: studentCode,
             stats: {
                 attendance: '0%',
                 average: '0%',
                 assignments: '0'
             }
         };
+
+        // Save user data to Firestore
+        await setDoc(doc(db, "students", user.uid), {
+            name: name,
+            email: email,
+            studentCode: studentCode
+        });
 
         // Show welcome screen
         document.getElementById('signupAuthStep').classList.remove('active');
@@ -530,29 +540,16 @@ async function completeLogin() {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Check if we have existing user data for this email
+        // جلب بيانات المستخدم من Firestore
         let userData = null;
-        
-        // First try to get user data stored by email
-        const emailData = localStorage.getItem(`userData_${email}`);
-        if (emailData) {
-            userData = JSON.parse(emailData);
+        const userDoc = await getDoc(doc(db, "students", user.uid));
+        if (userDoc.exists()) {
+            userData = userDoc.data();
+            userData.uid = user.uid;
         } else {
-            // Fallback to check current userData
-            const existingData = localStorage.getItem('userData');
-            if (existingData) {
-                const parsedData = JSON.parse(existingData);
-                // Check if the existing data matches the logged-in user
-                if (parsedData.email === email || parsedData.uid === user.uid) {
-                    userData = parsedData;
-                }
-            }
-        }
-        
-        // If no matching user data exists, create default data
-        if (!userData) {
+            // fallback لو مش موجود في Firestore
             userData = {
-                name: email.split('@')[0], // Use email prefix as name
+                name: email.split('@')[0],
                 emoji: '😊',
                 email: email,
                 uid: user.uid,
