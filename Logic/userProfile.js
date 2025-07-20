@@ -1,3 +1,8 @@
+// Import Firebase auth functions
+import { auth } from './shared/firebase.js';
+
+console.log('Firebase auth imported:', auth);
+
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
 const editAvatarBtn = document.querySelector('.edit-avatar-btn');
@@ -5,8 +10,18 @@ const themeToggle = document.getElementById('theme-toggle');
 const settingItems = document.querySelectorAll('.setting-item');
 const logoutBtn = document.getElementById('logoutBtn');
 
+console.log('DOM elements found:', {
+    profileAvatar: profileAvatar,
+    editAvatarBtn: editAvatarBtn,
+    themeToggle: themeToggle,
+    settingItems: settingItems.length,
+    logoutBtn: logoutBtn
+});
+
 // Initialize Profile
 function initializeProfile() {
+    console.log('Initializing profile...');
+    
     // Load user data
     loadUserData();
     
@@ -21,6 +36,34 @@ function initializeProfile() {
     
     // Add profile editing functionality
     setupProfileEditing();
+    
+    console.log('Profile initialization complete');
+    
+    // Add a test function to check user data
+    window.testUserData = function() {
+        const userData = localStorage.getItem('userData');
+        console.log('Raw userData from localStorage:', userData);
+        if (userData) {
+            const parsed = JSON.parse(userData);
+            console.log('Parsed userData:', parsed);
+            console.log('Name field:', parsed.name);
+            console.log('Email field:', parsed.email);
+        }
+        
+        // Check all localStorage keys
+        console.log('All localStorage keys:');
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('userData')) {
+                console.log(key, ':', localStorage.getItem(key));
+            }
+        }
+        
+        // Check DOM elements
+        console.log('Profile name element:', document.querySelector('.profile-name'));
+        console.log('Profile info element:', document.querySelector('.profile-info'));
+        console.log('Profile avatar element:', document.getElementById('profileAvatar'));
+    };
 }
 
 // Load User Data
@@ -32,16 +75,36 @@ function loadUserData() {
     }
     const userData = JSON.parse(storedData);
 
+    console.log('Loading user data:', userData);
+
     // Set name
-    document.querySelector('.profile-name').textContent = userData.name;
+    const profileNameElement = document.querySelector('.profile-name');
+    if (profileNameElement) {
+        // Use name if available, otherwise use email prefix, otherwise use 'User'
+        const displayName = userData.name || (userData.email ? userData.email.split('@')[0] : 'User');
+        profileNameElement.textContent = displayName;
+        console.log('Set profile name to:', displayName);
+    } else {
+        console.error('Profile name element not found');
+    }
 
     // Set profile info and emoji for control member
-    if (userData.isControl) {
-        document.querySelector('.profile-info').textContent = `Control Member • Code: ${userData.code}`;
-        profileAvatar.textContent = userData.emoji || '😈';
+    const profileInfoElement = document.querySelector('.profile-info');
+    if (profileInfoElement) {
+        if (userData.isControl) {
+            profileInfoElement.textContent = `Control Member • Email: ${userData.email}`;
+        } else {
+            profileInfoElement.textContent = `Student • Email: ${userData.email}`;
+        }
+        console.log('Set profile info to:', profileInfoElement.textContent);
     } else {
-        document.querySelector('.profile-info').textContent = `Class ${userData.class?.toUpperCase() || ''} • Student ID: ${userData.code}`;
+        console.error('Profile info element not found');
+    }
+
+    // Set avatar
+    if (profileAvatar) {
         profileAvatar.textContent = userData.emoji || '😊';
+        console.log('Set avatar to:', userData.emoji || '😊');
     }
 
     // Set stats
@@ -80,10 +143,41 @@ function setupEventListeners() {
 
     // Logout handler
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('userData');
-            window.location.href = 'onboarding.html';
+        console.log('Setting up logout handler for button:', logoutBtn);
+        logoutBtn.addEventListener('click', async () => {
+            console.log('Logout button clicked');
+            try {
+                // Sign out from Firebase
+                console.log('Attempting to sign out from Firebase...');
+                if (auth && typeof auth.signOut === 'function') {
+                    await auth.signOut();
+                    console.log('Successfully signed out from Firebase');
+                } else {
+                    console.log('Firebase auth not available, skipping Firebase signout');
+                }
+                // Clear local storage
+                localStorage.removeItem('userData');
+                console.log('Cleared local storage, redirecting...');
+                window.location.href = 'onboarding.html';
+            } catch (error) {
+                console.error('Error signing out:', error);
+                // Still clear local storage and redirect
+                localStorage.removeItem('userData');
+                window.location.href = 'onboarding.html';
+            }
         });
+    } else {
+        console.error('Logout button not found!');
+        // Try to find it by class name as fallback
+        const logoutByClass = document.querySelector('.logout-item');
+        if (logoutByClass) {
+            console.log('Found logout button by class, setting up handler');
+            logoutByClass.addEventListener('click', () => {
+                console.log('Logout button clicked (found by class)');
+                localStorage.removeItem('userData');
+                window.location.href = 'onboarding.html';
+            });
+        }
     }
 
     // Profile editing
@@ -119,25 +213,7 @@ function setupEventListeners() {
         });
     }
 
-    // Grade selection
-    document.querySelectorAll('#gradeOptions .option-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('#gradeOptions .option-button')
-                .forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        });
-    });
 
-    // Class selection
-    document.querySelectorAll('#classOptions .option-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('#classOptions .option-button')
-                .forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        });
-    });
 }
 
 // Page Transitions
@@ -171,20 +247,6 @@ function openEditModal() {
         }
     });
     
-    // Select current grade
-    document.querySelectorAll('#gradeOptions .option-button').forEach(button => {
-        if(button.dataset.value === userData.grade) {
-            button.classList.add('selected');
-        }
-    });
-    
-    // Select current class
-    document.querySelectorAll('#classOptions .option-button').forEach(button => {
-        if(button.dataset.value === userData.class?.slice(-1)) {
-            button.classList.add('selected');
-        }
-    });
-    
     modal.style.display = 'flex';
 }
 
@@ -209,13 +271,10 @@ function setupOptionButtons() {
 
 function saveProfileChanges() {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const grade = document.querySelector('#gradeOptions .option-button.selected')?.dataset.value;
-    const classLetter = document.querySelector('#classOptions .option-button.selected')?.dataset.value;
     
     const updatedData = {
         ...userData,
         name: document.getElementById('editName').value,
-        class: grade + classLetter,
         emoji: document.querySelector('.avatar-option.selected')?.dataset.emoji || '😊'
     };
     
@@ -245,8 +304,6 @@ function setupProfileEditing() {
         const updatedData = {
             ...userData,
             name: document.getElementById('editName').value,
-            grade: document.querySelector('#gradeOptions .option-button.selected')?.dataset.value,
-            class: document.querySelector('#classOptions .option-button.selected')?.dataset.value,
             emoji: selectedAvatar.dataset.emoji
         };
         

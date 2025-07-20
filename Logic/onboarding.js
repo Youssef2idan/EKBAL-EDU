@@ -1,4 +1,9 @@
+// Import Firebase auth functions
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from './shared/firebase.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, setting up onboarding...');
+    
     // Check if user has completed onboarding
     if (localStorage.getItem('userData')) {
         window.location.href = 'index.html';
@@ -10,6 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup control button
     setupControlButton();
+    
+    // Make functions globally available for onclick handlers
+window.nextStep = nextStep;
+window.nextSlide = nextSlide;
+window.startOnboarding = startOnboarding;
+window.completeOnboarding = completeOnboarding;
+window.chooseAction = chooseAction;
+window.completeSignup = completeSignup;
+window.completeLogin = completeLogin;
+    
+    console.log('Functions made global:', {
+        nextStep: typeof window.nextStep,
+        nextSlide: typeof window.nextSlide,
+        startOnboarding: typeof window.startOnboarding,
+        completeOnboarding: typeof window.completeOnboarding,
+        chooseAction: typeof window.chooseAction,
+        completeSignup: typeof window.completeSignup,
+        completeLogin: typeof window.completeLogin
+    });
 });
 
 function setupAvatarSelection() {
@@ -23,38 +47,15 @@ function setupAvatarSelection() {
 }
 
 async function nextStep(currentStepId, nextStepId) {
-    const currentStep = document.getElementById(currentStepId);
-    const nextStep = document.getElementById(nextStepId);
+    console.log('nextStep called with:', currentStepId, nextStepId);
     
-    // Special handling for student code validation
-    if (currentStepId === 'codeStep') {
-        const studentCode = document.getElementById('studentCode').value;
-        const validationResult = await validateStudentCode(studentCode);
-        
-        if (!validationResult.isValid) {
-            showError('Invalid student code. Please check and try again.', 'studentCode');
-            return;
-        }
-        
-        // If it's a control member, save their data and redirect to home page
-        if (validationResult.isControl) {
-            // Set constant user data for control member
-            const userData = {
-                name: 'Hasan Magdy',
-                emoji: '😈',
-                code: 'HR26626',
-                isControl: true,
-                stats: {
-                    attendance: '100%',
-                    average: '100%',
-                    assignments: '%%%'
-                }
-            };
-            localStorage.setItem('userData', JSON.stringify(userData));
-            window.location.href = 'index.html';
-            return;
-        }
-    }
+    const currentStep = document.getElementById(currentStepId);
+    const nextStepElement = document.getElementById(nextStepId);
+    
+    console.log('Elements found:', {
+        currentStep: currentStep,
+        nextStep: nextStepElement
+    });
     
     // Validate current step
     if (!validateStep(currentStepId)) {
@@ -64,9 +65,11 @@ async function nextStep(currentStepId, nextStepId) {
     }
 
     currentStep.classList.remove('active');
-    nextStep.classList.add('active');
+    nextStepElement.classList.add('active');
     updateDobyMessage(nextStepId);
     updateProgress(nextStepId);
+    
+    console.log('Step transition completed');
 }
 
 function validateStep(stepId) {
@@ -75,11 +78,10 @@ function validateStep(stepId) {
             return document.getElementById('userName').value.trim() !== '';
         case 'avatarStep':
             return document.querySelector('.avatar-option.selected') !== null;
-        case 'codeStep':
-            return document.getElementById('studentCode').value.trim() !== '';
-        case 'gradeStep':
-            return document.getElementById('grade').value !== '' && 
-                   document.getElementById('class').value !== '';
+        case 'signupAuthStep':
+            return validateSignupStep();
+        case 'loginAuthStep':
+            return validateLoginStep();
         default:
             return true;
     }
@@ -88,17 +90,20 @@ function validateStep(stepId) {
 function updateDobyMessage(stepId) {
     const dobyMessage = document.querySelector('.doby-message p');
     switch(stepId) {
+        case 'chooseActionStep':
+            dobyMessage.textContent = "Hi! I'm Doby, your personal assistant. Welcome back! What would you like to do today?";
+            break;
         case 'nameStep':
             dobyMessage.textContent = "Hi! I'm Doby, your personal assistant. Let's get your account set up! What's your name?";
             break;
         case 'avatarStep':
             dobyMessage.textContent = "Great! Now, let's pick a cool avatar for you! Choose one that matches your style!";
             break;
-        case 'codeStep':
-            dobyMessage.textContent = "Perfect! I'll need your student ID to set up your account properly.";
+        case 'signupAuthStep':
+            dobyMessage.textContent = "Perfect! Now let's create your account. Please enter your email and choose a secure password.";
             break;
-        case 'gradeStep':
-            dobyMessage.textContent = "Almost done! Just need to know which grade and class you're in.";
+        case 'loginAuthStep':
+            dobyMessage.textContent = "Great! Please enter your email and password to sign in to your account.";
             break;
         case 'welcomeStep':
             dobyMessage.textContent = "Awesome! Everything is ready for you. Welcome to EKBAL EDU!";
@@ -106,30 +111,7 @@ function updateDobyMessage(stepId) {
     }
 }
 
-// Add this function to validate student code
-async function validateStudentCode(code) {
-    try {
-        const response = await fetch('/Data/studentData/student-check.json');
-        const data = await response.json();
-        
-        // First check if the code is in the control array
-        const controlCodes = data.find(grade => grade.control)?.control || [];
-        if (controlCodes.includes(code)) {
-            return { isValid: true, isControl: true };
-        }
-        
-        // If not in control, check other grades
-        const isInOtherGrades = data.some(grade => {
-            const gradeCodes = Object.values(grade)[0];
-            return Array.isArray(gradeCodes) && gradeCodes.includes(code);
-        });
-        
-        return { isValid: isInOtherGrades, isControl: false };
-    } catch (error) {
-        console.error('Error validating student code:', error);
-        return { isValid: false, isControl: false };
-    }
-}
+
 
 // Add this function to show error message
 function showError(message, inputId) {
@@ -151,41 +133,61 @@ function showError(message, inputId) {
 
 // Update the completeOnboarding function
 async function completeOnboarding() {
-    if (!validateStep('gradeStep')) return;
-
-    const studentCode = document.getElementById('studentCode').value;
-    const isValidCode = await validateStudentCode(studentCode);
-
-    if (!isValidCode) {
-        alert('Invalid student code. Please check and try again.');
+    if (!validateStep('authStep')) {
+        const errorMessage = getErrorMessage('authStep');
+        showError(errorMessage, 'authStep');
         return;
     }
 
-    const userData = {
-        name: document.getElementById('userName').value,
-        emoji: document.querySelector('.avatar-option.selected').dataset.emoji,
-        code: studentCode,
-        grade: document.getElementById('grade').value,
-        class: document.getElementById('class').value,
-        stats: {
-            attendance: '0%',
-            average: '0%',
-            assignments: '0'
+    const email = document.getElementById('userEmail').value.trim();
+    const password = document.getElementById('userPassword').value;
+    const name = document.getElementById('userName').value;
+    const emoji = document.querySelector('.avatar-option.selected').dataset.emoji;
+
+    try {
+        // Create user account with Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const userData = {
+            name: name,
+            emoji: emoji,
+            email: email,
+            uid: user.uid,
+            stats: {
+                attendance: '0%',
+                average: '0%',
+                assignments: '0'
+            }
+        };
+
+        // Show welcome screen
+        document.getElementById('authStep').classList.remove('active');
+        document.getElementById('welcomeStep').classList.add('active');
+        document.getElementById('welcomeName').textContent = userData.name;
+
+        // Save user data
+        localStorage.setItem('userData', JSON.stringify(userData));
+
+        // Redirect to main app after delay
+        setTimeout(() => {
+            window.location.href = 'userProfile.html';
+        }, 3000);
+
+    } catch (error) {
+        console.error('Error creating account:', error);
+        let errorMessage = 'An error occurred while creating your account.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = 'This email is already registered. Please use a different email or try signing in.';
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = 'Password should be at least 6 characters long.';
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'Please enter a valid email address.';
         }
-    };
-
-    // Show welcome screen
-    document.getElementById('gradeStep').classList.remove('active');
-    document.getElementById('welcomeStep').classList.add('active');
-    document.getElementById('welcomeName').textContent = userData.name;
-
-    // Save user data
-    localStorage.setItem('userData', JSON.stringify(userData));
-
-    // Redirect to main app after delay
-    setTimeout(() => {
-        window.location.href = 'userProfile.html';
-    }, 3000);
+        
+        showError(errorMessage, 'authStep');
+    }
 }
 
 // Add error messages for each step
@@ -195,10 +197,10 @@ function getErrorMessage(stepId) {
             return 'Please enter your name';
         case 'avatarStep':
             return 'Please select an avatar';
-        case 'codeStep':
-            return 'Please enter a valid student code';
-        case 'gradeStep':
-            return 'Please select your grade and class';
+        case 'signupAuthStep':
+            return getSignupErrorMessage();
+        case 'loginAuthStep':
+            return getLoginErrorMessage();
         default:
             return 'Please complete this step';
     }
@@ -222,14 +224,15 @@ function startOnboarding() {
 }
 
 function updateProgress(stepId) {
-    const totalSteps = 4;
+    const totalSteps = 3;
     let currentStep;
     
     switch(stepId) {
-        case 'nameStep': currentStep = 1; break;
+        case 'chooseActionStep': currentStep = 1; break;
+        case 'nameStep': currentStep = 2; break;
         case 'avatarStep': currentStep = 2; break;
-        case 'codeStep': currentStep = 3; break;
-        case 'gradeStep': currentStep = 4; break;
+        case 'signupAuthStep': currentStep = 3; break;
+        case 'loginAuthStep': currentStep = 3; break;
         default: currentStep = 1;
     }
     
@@ -268,9 +271,9 @@ function setupControlButton() {
         controlButton.style.transform = 'translateY(0)';
     });
     
-    // Add button to the first step
-    const firstStep = document.getElementById('nameStep');
-    firstStep.appendChild(controlButton);
+    // Add button to the choose action step
+    const chooseActionStep = document.getElementById('chooseActionStep');
+    chooseActionStep.appendChild(controlButton);
     
     // Create popup menu
     const popup = document.createElement('div');
@@ -359,14 +362,15 @@ function setupControlButton() {
     
     document.getElementById('submitControlCode').addEventListener('click', async () => {
         const controlCode = document.getElementById('controlCode').value;
-        const validationResult = await validateStudentCode(controlCode);
         
-        if (validationResult.isValid && validationResult.isControl) {
+        // For now, we'll use a simple control code check
+        // You can modify this to use Firebase authentication for control members
+        if (controlCode === 'HR26626') {
             // Set constant user data for control member
             const userData = {
                 name: 'Hasan Magdy',
                 emoji: '😈',
-                code: 'HR26626',
+                email: 'control@ekbal.edu',
                 isControl: true,
                 stats: {
                     attendance: '0%',
@@ -413,4 +417,292 @@ function setupControlButton() {
         cancelButton.style.backgroundColor = '#e74c3c';
         cancelButton.style.transform = 'translateY(0)';
     });
+}
+
+// New functions for signup/login flow
+function chooseAction(action) {
+    console.log('Action chosen:', action);
+    
+    if (action === 'signup') {
+        // Go to name step for signup
+        document.getElementById('chooseActionStep').classList.remove('active');
+        document.getElementById('nameStep').classList.add('active');
+        updateDobyMessage('nameStep');
+        updateProgress('nameStep');
+    } else if (action === 'login') {
+        // Go directly to login step
+        document.getElementById('chooseActionStep').classList.remove('active');
+        document.getElementById('loginAuthStep').classList.add('active');
+        updateDobyMessage('loginAuthStep');
+        updateProgress('loginAuthStep');
+    }
+}
+
+async function completeSignup() {
+    if (!validateSignupStep()) {
+        const errorMessage = getSignupErrorMessage();
+        showError(errorMessage, 'signupAuthStep');
+        return;
+    }
+
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const name = document.getElementById('userName').value;
+    const emoji = document.querySelector('.avatar-option.selected').dataset.emoji;
+
+    try {
+        // Create user account with Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const userData = {
+            name: name,
+            emoji: emoji,
+            email: email,
+            uid: user.uid,
+            stats: {
+                attendance: '0%',
+                average: '0%',
+                assignments: '0'
+            }
+        };
+
+        // Show welcome screen
+        document.getElementById('signupAuthStep').classList.remove('active');
+        document.getElementById('welcomeStep').classList.add('active');
+        
+        const welcomeNameElement = document.getElementById('welcomeName');
+        const welcomeMessageElement = document.getElementById('welcomeMessage');
+        
+        if (welcomeNameElement) {
+            // Use name if available, otherwise use email prefix
+            const displayName = userData.name || (userData.email ? userData.email.split('@')[0] : 'User');
+            welcomeNameElement.textContent = displayName;
+            console.log('Set welcome name to:', displayName);
+        } else {
+            console.error('Welcome name element not found');
+        }
+        
+        if (welcomeMessageElement) {
+            welcomeMessageElement.textContent = 'Your account has been created successfully.';
+        } else {
+            console.error('Welcome message element not found');
+        }
+
+        // Save user data
+        localStorage.setItem('userData', JSON.stringify(userData));
+        // Also save user data by email for future logins
+        localStorage.setItem(`userData_${email}`, JSON.stringify(userData));
+
+        // Redirect to main app after delay
+        setTimeout(() => {
+            window.location.href = 'userProfile.html';
+        }, 3000);
+
+    } catch (error) {
+        console.error('Error creating account:', error);
+        let errorMessage = 'An error occurred while creating your account.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = 'This email is already registered. Please use a different email or try signing in.';
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = 'Password should be at least 6 characters long.';
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'Please enter a valid email address.';
+        }
+        
+        showError(errorMessage, 'signupAuthStep');
+    }
+}
+
+async function completeLogin() {
+    if (!validateLoginStep()) {
+        const errorMessage = getLoginErrorMessage();
+        showError(errorMessage, 'loginAuthStep');
+        return;
+    }
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+        // Sign in with Firebase
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Check if we have existing user data for this email
+        let userData = null;
+        
+        // First try to get user data stored by email
+        const emailData = localStorage.getItem(`userData_${email}`);
+        if (emailData) {
+            userData = JSON.parse(emailData);
+        } else {
+            // Fallback to check current userData
+            const existingData = localStorage.getItem('userData');
+            if (existingData) {
+                const parsedData = JSON.parse(existingData);
+                // Check if the existing data matches the logged-in user
+                if (parsedData.email === email || parsedData.uid === user.uid) {
+                    userData = parsedData;
+                }
+            }
+        }
+        
+        // If no matching user data exists, create default data
+        if (!userData) {
+            userData = {
+                name: email.split('@')[0], // Use email prefix as name
+                emoji: '😊',
+                email: email,
+                uid: user.uid,
+                stats: {
+                    attendance: '0%',
+                    average: '0%',
+                    assignments: '0'
+                }
+            };
+        }
+
+        // Show welcome screen
+        document.getElementById('loginAuthStep').classList.remove('active');
+        document.getElementById('welcomeStep').classList.add('active');
+        
+        const welcomeNameElement = document.getElementById('welcomeName');
+        const welcomeMessageElement = document.getElementById('welcomeMessage');
+        
+        if (welcomeNameElement) {
+            // Use name if available, otherwise use email prefix
+            const displayName = userData.name || (userData.email ? userData.email.split('@')[0] : 'User');
+            welcomeNameElement.textContent = displayName;
+            console.log('Set welcome name to:', displayName);
+        } else {
+            console.error('Welcome name element not found');
+        }
+        
+        if (welcomeMessageElement) {
+            welcomeMessageElement.textContent = 'Welcome back! You have successfully signed in.';
+        } else {
+            console.error('Welcome message element not found');
+        }
+
+        // Save user data
+        localStorage.setItem('userData', JSON.stringify(userData));
+        // Also save user data by email for future logins
+        localStorage.setItem(`userData_${email}`, JSON.stringify(userData));
+
+        // Redirect to main app after delay
+        setTimeout(() => {
+            window.location.href = 'userProfile.html';
+        }, 3000);
+
+    } catch (error) {
+        console.error('Error signing in:', error);
+        let errorMessage = 'An error occurred while signing in.';
+        
+        if (error.code === 'auth/user-not-found') {
+            errorMessage = 'No account found with this email. Please create an account first.';
+        } else if (error.code === 'auth/wrong-password') {
+            errorMessage = 'Incorrect password. Please try again.';
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'Please enter a valid email address.';
+        }
+        
+        showError(errorMessage, 'loginAuthStep');
+    }
+}
+
+function validateSignupStep() {
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return false;
+    }
+    
+    // Password validation (minimum 6 characters)
+    if (password.length < 6) {
+        return false;
+    }
+    
+    // Confirm password validation
+    if (password !== confirmPassword) {
+        return false;
+    }
+    
+    return true;
+}
+
+function validateLoginStep() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return false;
+    }
+    
+    // Password validation
+    if (password.length === 0) {
+        return false;
+    }
+    
+    return true;
+}
+
+function getSignupErrorMessage() {
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (!email) {
+        return 'Please enter your email address';
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return 'Please enter a valid email address';
+    }
+    
+    if (!password) {
+        return 'Please enter a password';
+    }
+    
+    if (password.length < 6) {
+        return 'Password must be at least 6 characters long';
+    }
+    
+    if (!confirmPassword) {
+        return 'Please confirm your password';
+    }
+    
+    if (password !== confirmPassword) {
+        return 'Passwords do not match';
+    }
+    
+    return 'Please complete all fields correctly';
+}
+
+function getLoginErrorMessage() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    
+    if (!email) {
+        return 'Please enter your email address';
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return 'Please enter a valid email address';
+    }
+    
+    if (!password) {
+        return 'Please enter your password';
+    }
+    
+    return 'Please complete all fields correctly';
 }

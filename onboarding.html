@@ -141,14 +141,30 @@
                             <img src="/Data/images/OnBoarding/Doby.png" alt="Doby">
                         </div>
                         <div class="doby-message">
-                            <p>Hi! I'm Doby, your personal assistant. Let's get your account set up! What's your name?</p>
+                            <p>Hi! I'm Doby, your personal assistant. Welcome back! What would you like to do today?</p>
                         </div>
                     </div>
 
                     <!-- Form Steps -->
                     <div class="form-steps">
-                        <!-- Step 1: Name -->
-                        <div class="step active" id="nameStep">
+                        <!-- Step 1: Choose Action -->
+                        <div class="step active" id="chooseActionStep">
+                            <div class="action-choice-container">
+                                <div class="action-card" onclick="chooseAction('signup')">
+                                    <div class="action-icon">📝</div>
+                                    <h3>Create Account</h3>
+                                    <p>New to EKBAL EDU? Let's set up your account!</p>
+                                </div>
+                                <div class="action-card" onclick="chooseAction('login')">
+                                    <div class="action-icon">🔑</div>
+                                    <h3>Sign In</h3>
+                                    <p>Welcome back! Sign in to your existing account.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Name (Signup only) -->
+                        <div class="step" id="nameStep">
                             <div class="input-group">
                                 <input type="text" id="userName" placeholder="Enter your name" required>
                                 <div class="progress-bar">
@@ -158,7 +174,7 @@
                             </div>
                         </div>
 
-                        <!-- Step 2: Avatar -->
+                        <!-- Step 3: Avatar (Signup only) -->
                         <div class="step" id="avatarStep">
                             <div class="avatar-grid">
                                 <div class="avatar-option" data-emoji="😊">😊</div>
@@ -171,37 +187,44 @@
                             <div class="progress-bar">
                                 <div class="progress" id="progressBar"></div>
                             </div>
-                            <button class="continue-btn" onclick="nextStep('avatarStep', 'codeStep')">Continue</button>
+                            <button class="continue-btn" onclick="nextStep('avatarStep', 'signupAuthStep')">Continue</button>
                         </div>
 
-                        <!-- Step 3: Student ID -->
-                        <div class="step" id="codeStep">
-                            <div class="input-group">
-                                <input type="text" id="studentCode" placeholder="Enter your student ID" required>
+                        <!-- Step 4: Signup Email & Password -->
+                        <div class="step" id="signupAuthStep">
+                            <div class="auth-container">
+                                <div class="input-group">
+                                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" id="signupPassword" placeholder="Enter your password" required>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                                </div>
                                 <div class="progress-bar">
                                     <div class="progress" id="progressBar"></div>
                                 </div>
-                                <button class="continue-btn" onclick="nextStep('codeStep', 'gradeStep')">Continue</button>
+                                <button class="continue-btn" onclick="completeSignup()">
+                                    <span>Create Account</span>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Step 4: Grade & Class -->
-                        <div class="step" id="gradeStep">
-                            <div class="grade-class-container">
-                                <select id="grade" required>
-                                    <option value="" disabled selected>Select your grade</option>
-                                    <option value="middle1">Middle 1</option>
-                                    <option value="middle2">Middle 2</option>
-                                </select>
-                                <select id="class" required>
-                                    <option value="" disabled selected>Select your class</option>
-                                    <option value="a">Class A</option>
-                                    <option value="b">Class B</option>
-                                    <option value="c">Class C</option>
-                                    <option value="d">Class D</option>
-                                </select>
-                                <button class="continue-btn" onclick="completeOnboarding()">
-                                    <span>Finish</span>
+                        <!-- Step 5: Login Email & Password -->
+                        <div class="step" id="loginAuthStep">
+                            <div class="auth-container">
+                                <div class="input-group">
+                                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" id="progressBar"></div>
+                                </div>
+                                <button class="continue-btn" onclick="completeLogin()">
+                                    <span>Sign In</span>
                                 </button>
                             </div>
                         </div>
@@ -216,7 +239,7 @@
                                     </svg>
                                 </div>
                                 <h2>Welcome, <span id="welcomeName"></span>!</h2>
-                                <p>Your account has been created successfully.</p>
+                                <p id="welcomeMessage">Your account has been created successfully.</p>
                                 <div class="loading-dots">
                                     <span></span>
                                     <span></span>
@@ -229,10 +252,9 @@
                     <!-- Progress Section -->
                     <div class="progress-section">
                         <div class="progress-labels">
-                            <span class="progress-step active">Name</span>
-                            <span class="progress-step">Avatar</span>
-                            <span class="progress-step">ID</span>
-                            <span class="progress-step">Grade</span>
+                            <span class="progress-step active">Choose</span>
+                            <span class="progress-step">Details</span>
+                            <span class="progress-step">Account</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress" id="progressBar"></div>
@@ -258,6 +280,8 @@
         </div>
     </div>
 
-    <script src="/Logic/onboarding.js"></script>
+    <script type="module" src="/Logic/onboarding.js"></script>
+    <script type="module" src="/Logic/shared/firebase.js"></script>
+    <script type="module" src="/Logic/shared/auth.js"></script>
 </body>
 </html> 
