@@ -1,0 +1,227 @@
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+.main-content {
+    padding-top: 2.5rem;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+.hadith-support-container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 60vh;
+    direction: rtl;
+}
+.question {
+    font-size: 2.1rem;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+.features-section {
+    padding: 1.5rem 1rem;
+    margin: 1rem auto;
+    max-width: 1200px;
+    width: 100%;
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+    padding: 0 0.5rem;
+}
+.feature-item {
+    background-color: var(--panel-color);
+    padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--border-color);
+}
+.feature-item:active, .feature-item:focus {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+.feature-icon {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    font-size: 2rem;
+}
+.feature-item h3 {
+    color: var(--text-color);
+    margin-bottom: 0.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.hadith-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.hadith-card {
+    background: var(--panel-color);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(35, 64, 142, 0.10);
+    padding: 28px 18px 18px 18px;
+    max-width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    animation: fadeInCard 0.5s;
+    min-height: 170px;
+    width: 100%;
+    max-width: 400px;
+}
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.hadith-label {
+    color: #6b7a90;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.2em;
+    letter-spacing: 0.01em;
+}
+.hadith-text {
+    font-size: 1.25rem;
+    color: var(--text-color);
+    line-height: 2.1;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    font-family: inherit;
+}
+.another-hadith-btn {
+    background: #e3eafc;
+    color: #23408e;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 0.5rem;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(35, 64, 142, 0.07);
+}
+.another-hadith-btn:hover, .another-hadith-btn:focus {
+    background: #c7d6f7;
+    color: #1a2c5b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.13);
+}
+.styled-question {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: linear-gradient(90deg, #e3eafc 0%, #fff 100%);
+    border-radius: 12px;
+    padding: 0.7em 0.5em;
+    box-shadow: 0 2px 8px rgba(35, 64, 142, 0.07);
+}
+.hadith-feelings-grid .feature-item {
+    position: relative;
+    overflow: hidden;
+}
+.hadith-feelings-grid .feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 4px;
+    width: 100%;
+    background: var(--secondary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+.hadith-feelings-grid .feature-item:hover::before,
+.hadith-feelings-grid .feature-item:focus::before {
+    transform: scaleX(1);
+}
+@media (max-width: 600px) {
+    .main-content {
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+    .hadith-support-container {
+        padding: 0;
+    }
+    .features-section {
+        padding: 0.7rem 0.3rem;
+    }
+    .features-grid {
+        gap: 0.5rem;
+        padding: 0 0.1rem;
+    }
+    .feature-item {
+        height: 80px;
+        padding: 0.5rem 0.3rem 0.4rem 0.3rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+    }
+    .feature-icon {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 0.2rem;
+        font-size: 1.3rem;
+    }
+    .question {
+        font-size: 1.1rem;
+    }
+    .hadith-card {
+        padding: 14px 4px 8px 4px;
+    }
+    .hadith-text {
+        font-size: 1rem;
+    }
+} 
